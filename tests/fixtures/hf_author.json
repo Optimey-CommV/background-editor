@@ -1,0 +1,1080 @@
+[
+ {
+  "id": "ZhengPeng7/BiRefNet",
+  "author": "ZhengPeng7",
+  "sha": "e2bf8e4460fc8fa32bba5ea4d94b3233d367b0e4",
+  "lastModified": "2026-02-04T22:43:55.000Z",
+  "createdAt": "2024-07-12T08:50:09.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "birefnet",
+   "safetensors",
+   "image-segmentation",
+   "background-removal",
+   "mask-generation",
+   "Dichotomous Image Segmentation",
+   "Camouflaged Object Detection",
+   "Salient Object Detection",
+   "pytorch_model_hub_mixin",
+   "model_hub_mixin",
+   "transformers",
+   "custom_code",
+   "arxiv:2401.03407",
+   "license:mit",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "birefnet",
+  "cardData": {
+   "license": "mit",
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Dichotomous Image Segmentation",
+    "Camouflaged Object Detection",
+    "Salient Object Detection",
+    "pytorch_model_hub_mixin",
+    "model_hub_mixin",
+    "transformers"
+   ],
+   "library_name": "birefnet",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": ".gitignore"
+   },
+   {
+    "rfilename": "BiRefNet_config.py"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "birefnet.py"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "handler.py"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "requirements.txt"
+   }
+  ]
+ },
+ {
+  "id": "ZhengPeng7/BiRefNet_lite",
+  "author": "ZhengPeng7",
+  "sha": "aa62cd87eafb9cc43056d08ef3615a14628b831d",
+  "lastModified": "2026-08-29T11:41:17.000Z",
+  "createdAt": "2024-08-02T03:51:45.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "birefnet",
+   "safetensors",
+   "background-removal",
+   "mask-generation",
+   "Dichotomous Image Segmentation",
+   "Camouflaged Object Detection",
+   "Salient Object Detection",
+   "pytorch_model_hub_mixin",
+   "model_hub_mixin",
+   "image-segmentation",
+   "custom_code",
+   "arxiv:2401.03407",
+   "license:mit",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "birefnet",
+  "cardData": {
+   "license": "mit",
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Dichotomous Image Segmentation",
+    "Camouflaged Object Detection",
+    "Salient Object Detection",
+    "pytorch_model_hub_mixin",
+    "model_hub_mixin"
+   ],
+   "library_name": "birefnet",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "BiRefNet_config.py"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "birefnet.py"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "handler.py"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "requirements.txt"
+   }
+  ]
+ },
+ {
+  "id": "ZhengPeng7/BiRefNet_HR",
+  "author": "ZhengPeng7",
+  "sha": "a7a562f6fd16021180f2f4348f4de003a2d3d1e1",
+  "lastModified": "2026-02-04T22:43:53.000Z",
+  "createdAt": "2025-02-01T17:52:14.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "birefnet",
+   "safetensors",
+   "background-removal",
+   "mask-generation",
+   "Dichotomous Image Segmentation",
+   "Camouflaged Object Detection",
+   "Salient Object Detection",
+   "pytorch_model_hub_mixin",
+   "model_hub_mixin",
+   "image-segmentation",
+   "custom_code",
+   "arxiv:2401.03407",
+   "license:mit",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "birefnet",
+  "cardData": {
+   "license": "mit",
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Dichotomous Image Segmentation",
+    "Camouflaged Object Detection",
+    "Salient Object Detection",
+    "pytorch_model_hub_mixin",
+    "model_hub_mixin"
+   ],
+   "library_name": "birefnet",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "BiRefNet_config.py"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "birefnet.py"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "handler.py"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "requirements.txt"
+   }
+  ]
+ },
+ {
+  "id": "ZhengPeng7/BiRefNet_HR-matting",
+  "author": "ZhengPeng7",
+  "sha": "5d6b6f8adcb5b417c871b1d84ceaae9871355b7f",
+  "lastModified": "2026-02-04T22:43:50.000Z",
+  "createdAt": "2025-02-12T16:19:23.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "birefnet",
+   "safetensors",
+   "background-removal",
+   "mask-generation",
+   "Dichotomous Image Segmentation",
+   "Camouflaged Object Detection",
+   "Salient Object Detection",
+   "pytorch_model_hub_mixin",
+   "model_hub_mixin",
+   "image-segmentation",
+   "custom_code",
+   "arxiv:2401.03407",
+   "license:mit",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "birefnet",
+  "cardData": {
+   "license": "mit",
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Dichotomous Image Segmentation",
+    "Camouflaged Object Detection",
+    "Salient Object Detection",
+    "pytorch_model_hub_mixin",
+    "model_hub_mixin"
+   ],
+   "library_name": "birefnet",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "BiRefNet_config.py"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "birefnet.py"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "handler.py"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "requirements.txt"
+   }
+  ]
+ },
+ {
+  "id": "ZhengPeng7/BiRefNet_dynamic",
+  "author": "ZhengPeng7",
+  "sha": "280306042f57b7a33854319da62fd86aaa89ec4c",
+  "lastModified": "2026-02-04T22:43:48.000Z",
+  "createdAt": "2025-03-31T03:37:03.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "birefnet",
+   "safetensors",
+   "image-segmentation",
+   "background-removal",
+   "mask-generation",
+   "Dichotomous Image Segmentation",
+   "Camouflaged Object Detection",
+   "Salient Object Detection",
+   "pytorch_model_hub_mixin",
+   "model_hub_mixin",
+   "transformers",
+   "custom_code",
+   "arxiv:2401.03407",
+   "license:mit",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "birefnet",
+  "cardData": {
+   "license": "mit",
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Dichotomous Image Segmentation",
+    "Camouflaged Object Detection",
+    "Salient Object Detection",
+    "pytorch_model_hub_mixin",
+    "model_hub_mixin",
+    "transformers"
+   ],
+   "library_name": "birefnet",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "BiRefNet_config.py"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "birefnet.py"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "handler.py"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "requirements.txt"
+   }
+  ]
+ },
+ {
+  "id": "ZhengPeng7/BiRefNet-legacy",
+  "author": "ZhengPeng7",
+  "sha": "39bdbfc112efe2b2da0da75522fb3d5c51993f3a",
+  "lastModified": "2026-08-29T11:42:22.000Z",
+  "createdAt": "2024-05-13T16:21:40.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "birefnet",
+   "safetensors",
+   "background-removal",
+   "mask-generation",
+   "Dichotomous Image Segmentation",
+   "pytorch_model_hub_mixin",
+   "model_hub_mixin",
+   "image-segmentation",
+   "custom_code",
+   "arxiv:2401.03407",
+   "license:mit",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "birefnet",
+  "cardData": {
+   "license": "mit",
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Dichotomous Image Segmentation",
+    "pytorch_model_hub_mixin",
+    "model_hub_mixin"
+   ],
+   "library_name": "birefnet",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "BiRefNet_config.py"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "birefnet.py"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "handler.py"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "requirements.txt"
+   }
+  ]
+ },
+ {
+  "id": "ZhengPeng7/BiRefNet-portrait",
+  "author": "ZhengPeng7",
+  "sha": "b6561965a70070d9143fd9e558f6ca3c481510db",
+  "lastModified": "2026-08-29T11:40:22.000Z",
+  "createdAt": "2024-05-13T16:27:16.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "birefnet",
+   "safetensors",
+   "background-removal",
+   "mask-generation",
+   "Image Matting",
+   "pytorch_model_hub_mixin",
+   "model_hub_mixin",
+   "image-segmentation",
+   "custom_code",
+   "arxiv:2401.03407",
+   "license:mit",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "birefnet",
+  "cardData": {
+   "license": "mit",
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Image Matting",
+    "pytorch_model_hub_mixin",
+    "model_hub_mixin"
+   ],
+   "library_name": "birefnet",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": ".gitignore"
+   },
+   {
+    "rfilename": "BiRefNet_config.py"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "birefnet.py"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "handler.py"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "requirements.txt"
+   }
+  ]
+ },
+ {
+  "id": "ZhengPeng7/BiRefNet-COD",
+  "author": "ZhengPeng7",
+  "sha": "6aa747035f7b70caa1c66cd5c128d6e9c654ddd0",
+  "lastModified": "2026-08-29T11:42:09.000Z",
+  "createdAt": "2024-08-01T08:33:05.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "birefnet",
+   "safetensors",
+   "background-removal",
+   "mask-generation",
+   "Dichotomous Image Segmentation",
+   "Camouflaged Object Detection",
+   "pytorch_model_hub_mixin",
+   "model_hub_mixin",
+   "image-segmentation",
+   "custom_code",
+   "arxiv:2401.03407",
+   "license:mit",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "birefnet",
+  "cardData": {
+   "license": "mit",
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Dichotomous Image Segmentation",
+    "Camouflaged Object Detection",
+    "pytorch_model_hub_mixin",
+    "model_hub_mixin"
+   ],
+   "library_name": "birefnet",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "BiRefNet_config.py"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "birefnet.py"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "handler.py"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "requirements.txt"
+   }
+  ]
+ },
+ {
+  "id": "ZhengPeng7/BiRefNet-DIS5K",
+  "author": "ZhengPeng7",
+  "sha": "343602b3219a0e905a86c5012935d5a4a0882390",
+  "lastModified": "2026-08-29T11:41:57.000Z",
+  "createdAt": "2024-08-01T08:59:05.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "birefnet",
+   "safetensors",
+   "background-removal",
+   "mask-generation",
+   "Dichotomous Image Segmentation",
+   "pytorch_model_hub_mixin",
+   "model_hub_mixin",
+   "image-segmentation",
+   "custom_code",
+   "arxiv:2401.03407",
+   "license:mit",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "birefnet",
+  "cardData": {
+   "license": "mit",
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Dichotomous Image Segmentation",
+    "pytorch_model_hub_mixin",
+    "model_hub_mixin"
+   ],
+   "library_name": "birefnet",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "BiRefNet_config.py"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "birefnet.py"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "handler.py"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "requirements.txt"
+   }
+  ]
+ },
+ {
+  "id": "ZhengPeng7/BiRefNet-HRSOD",
+  "author": "ZhengPeng7",
+  "sha": "8a0b1035861383b8a63a622a89a015419194e68d",
+  "lastModified": "2026-08-29T11:41:46.000Z",
+  "createdAt": "2024-08-01T09:04:27.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "birefnet",
+   "safetensors",
+   "background-removal",
+   "mask-generation",
+   "Dichotomous Image Segmentation",
+   "Salient Object Detection",
+   "pytorch_model_hub_mixin",
+   "model_hub_mixin",
+   "image-segmentation",
+   "custom_code",
+   "arxiv:2401.03407",
+   "license:mit",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "birefnet",
+  "cardData": {
+   "license": "mit",
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Dichotomous Image Segmentation",
+    "Salient Object Detection",
+    "pytorch_model_hub_mixin",
+    "model_hub_mixin"
+   ],
+   "library_name": "birefnet",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "BiRefNet_config.py"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "birefnet.py"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "handler.py"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "requirements.txt"
+   }
+  ]
+ },
+ {
+  "id": "ZhengPeng7/BiRefNet-DIS5K-TR_TEs",
+  "author": "ZhengPeng7",
+  "sha": "487f440314ea7ab8ea7d184861953a4010b55587",
+  "lastModified": "2026-02-04T22:43:36.000Z",
+  "createdAt": "2024-08-01T09:10:08.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "birefnet",
+   "safetensors",
+   "background-removal",
+   "mask-generation",
+   "Dichotomous Image Segmentation",
+   "pytorch_model_hub_mixin",
+   "model_hub_mixin",
+   "image-segmentation",
+   "custom_code",
+   "arxiv:2401.03407",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "birefnet",
+  "cardData": {
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Dichotomous Image Segmentation",
+    "pytorch_model_hub_mixin",
+    "model_hub_mixin"
+   ],
+   "library_name": "birefnet",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "BiRefNet_config.py"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "birefnet.py"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "handler.py"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "requirements.txt"
+   }
+  ]
+ },
+ {
+  "id": "ZhengPeng7/BiRefNet_lite-2K",
+  "author": "ZhengPeng7",
+  "sha": "3f789d2ba403e2ee59ce08ee9250d4c1c590b418",
+  "lastModified": "2026-08-29T11:41:29.000Z",
+  "createdAt": "2024-09-24T02:16:30.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "birefnet",
+   "safetensors",
+   "background-removal",
+   "mask-generation",
+   "Dichotomous Image Segmentation",
+   "Camouflaged Object Detection",
+   "Salient Object Detection",
+   "pytorch_model_hub_mixin",
+   "model_hub_mixin",
+   "image-segmentation",
+   "custom_code",
+   "arxiv:2401.03407",
+   "license:mit",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "birefnet",
+  "cardData": {
+   "license": "mit",
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Dichotomous Image Segmentation",
+    "Camouflaged Object Detection",
+    "Salient Object Detection",
+    "pytorch_model_hub_mixin",
+    "model_hub_mixin"
+   ],
+   "library_name": "birefnet",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "BiRefNet_config.py"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "birefnet.py"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "handler.py"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "requirements.txt"
+   }
+  ]
+ },
+ {
+  "id": "ZhengPeng7/BiRefNet-matting",
+  "author": "ZhengPeng7",
+  "sha": "eccde0a8cbdce7ac5fecfeb06340fe7b949e85d9",
+  "lastModified": "2026-08-29T11:40:50.000Z",
+  "createdAt": "2024-10-06T10:30:05.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "birefnet",
+   "safetensors",
+   "background-removal",
+   "mask-generation",
+   "Image Matting",
+   "pytorch_model_hub_mixin",
+   "model_hub_mixin",
+   "image-segmentation",
+   "custom_code",
+   "arxiv:2401.03407",
+   "license:mit",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "birefnet",
+  "cardData": {
+   "license": "mit",
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Image Matting",
+    "pytorch_model_hub_mixin",
+    "model_hub_mixin"
+   ],
+   "library_name": "birefnet",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "BiRefNet_config.py"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "birefnet.py"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "handler.py"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "requirements.txt"
+   }
+  ]
+ },
+ {
+  "id": "ZhengPeng7/BiRefNet_512x512",
+  "author": "ZhengPeng7",
+  "sha": "678c37f9158280a2b3000b566ecd12bfbfd1a09c",
+  "lastModified": "2026-02-04T22:41:01.000Z",
+  "createdAt": "2025-02-05T09:11:38.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "birefnet",
+   "safetensors",
+   "background-removal",
+   "mask-generation",
+   "Dichotomous Image Segmentation",
+   "Camouflaged Object Detection",
+   "Salient Object Detection",
+   "pytorch_model_hub_mixin",
+   "model_hub_mixin",
+   "image-segmentation",
+   "custom_code",
+   "arxiv:2401.03407",
+   "license:mit",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "birefnet",
+  "cardData": {
+   "license": "mit",
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Dichotomous Image Segmentation",
+    "Camouflaged Object Detection",
+    "Salient Object Detection",
+    "pytorch_model_hub_mixin",
+    "model_hub_mixin"
+   ],
+   "library_name": "birefnet",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "BiRefNet_config.py"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "birefnet.py"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "handler.py"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "requirements.txt"
+   }
+  ]
+ },
+ {
+  "id": "ZhengPeng7/BiRefNet_lite-matting",
+  "author": "ZhengPeng7",
+  "sha": "99c33412e3f58e1f33187abdc8c435c645243690",
+  "lastModified": "2026-02-04T22:43:43.000Z",
+  "createdAt": "2025-04-22T12:12:18.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "birefnet",
+   "safetensors",
+   "image-segmentation",
+   "Anime Segmentation",
+   "background-removal",
+   "mask-generation",
+   "Dichotomous Image Segmentation",
+   "Salient Object Detection",
+   "pytorch_model_hub_mixin",
+   "model_hub_mixin",
+   "transformers",
+   "transformers.js",
+   "custom_code",
+   "arxiv:2401.03407",
+   "license:mit",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "birefnet",
+  "cardData": {
+   "license": "mit",
+   "tags": [
+    "Anime Segmentation",
+    "background-removal",
+    "mask-generation",
+    "Dichotomous Image Segmentation",
+    "Salient Object Detection",
+    "pytorch_model_hub_mixin",
+    "model_hub_mixin",
+    "transformers",
+    "transformers.js"
+   ],
+   "library_name": "birefnet",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": ".gitignore"
+   },
+   {
+    "rfilename": "BiRefNet_config.py"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "birefnet.py"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "handler.py"
+   },
+   {
+    "rfilename": "model.safetensors"
+   }
+  ]
+ },
+ {
+  "id": "ZhengPeng7/BiRefNet_dynamic-matting",
+  "author": "ZhengPeng7",
+  "sha": "074df545be87034e74a96bf71566ecbbc4c15f0a",
+  "lastModified": "2026-02-04T22:43:47.000Z",
+  "createdAt": "2025-07-11T15:10:08.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "birefnet",
+   "safetensors",
+   "image-segmentation",
+   "background-removal",
+   "mask-generation",
+   "Dichotomous Image Segmentation",
+   "Camouflaged Object Detection",
+   "Salient Object Detection",
+   "pytorch_model_hub_mixin",
+   "model_hub_mixin",
+   "transformers",
+   "custom_code",
+   "arxiv:2401.03407",
+   "license:mit",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "birefnet",
+  "cardData": {
+   "license": "mit",
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Dichotomous Image Segmentation",
+    "Camouflaged Object Detection",
+    "Salient Object Detection",
+    "pytorch_model_hub_mixin",
+    "model_hub_mixin",
+    "transformers"
+   ],
+   "library_name": "birefnet",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "BiRefNet_config.py"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "birefnet.py"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "handler.py"
+   },
+   {
+    "rfilename": "model.safetensors"
+   },
+   {
+    "rfilename": "requirements.txt"
+   }
+  ]
+ }
+]

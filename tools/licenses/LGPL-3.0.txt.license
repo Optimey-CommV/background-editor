@@ -1,0 +1,5 @@
+SPDX-FileCopyrightText: 2007 Free Software Foundation, Inc. <https://fsf.org/>
+SPDX-License-Identifier: LicenseRef-FSF-verbatim
+
+The verbatim text of the GNU Lesser General Public License version 3, shipped with the app
+next to LICENSE because Qt, libheif and libde265 are LGPL v3.

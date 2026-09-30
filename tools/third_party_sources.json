@@ -1,0 +1,266 @@
+{
+  "comment": "Source archives that build.ps1 puts in dist/BackgroundEditor-<version>-third-party-sources.zip: the GPL, LGPL and MPL components of the packaged app (the permissive ones need only their notices, which ship in the app's licenses folder). 'covers' are the files in the app folder each archive is the source of; 'copyleft_files' are the files that must be covered; 'notice_only_files' are the known permissive binaries. tools/build_tools.py check-bundle fails the build when a copyleft file is not covered or an archive covers nothing. sha256 and size pin the exact upstream file; 'checksum_source' says where the pinned value was checked. 'wheel' is the installed package whose binaries the archive is the source of; check-bundle fails when the build venv has another version, so the list cannot silently go stale after a package update.",
+  "copyleft_files": [
+    "_internal/PyQt6/*.pyd",
+    "_internal/PyQt6/Qt6/bin/Qt6*.dll",
+    "_internal/PyQt6/Qt6/plugins/*",
+    "_internal/PyQt6/Qt6/translations/*",
+    "_internal/libheif-*.dll",
+    "_internal/libde265-*.dll",
+    "_internal/libx265-*.dll",
+    "_internal/libgcc_s_*.dll",
+    "_internal/libstdc++-*.dll",
+    "_internal/onnxruntime/capi/*.dll",
+    "_internal/onnxruntime/capi/*.pyd"
+  ],
+  "notice_only_files": [
+    "BackgroundEditor.exe",
+    "_internal/python3*.dll",
+    "_internal/*.pyd",
+    "_internal/libffi-*.dll",
+    "_internal/libssl-3.dll",
+    "_internal/libcrypto-3.dll",
+    "_internal/sqlite3.dll",
+    "_internal/libwinpthread-*.dll",
+    "_internal/PyQt6/Qt6/bin/opengl32sw.dll",
+    "_internal/numpy/*",
+    "_internal/numpy.libs/*",
+    "_internal/scipy/*",
+    "_internal/scipy.libs/*",
+    "_internal/PIL/*"
+  ],
+  "archives": [
+    {
+      "name": "PyQt6 6.11.0",
+      "file": "pyqt6-6.11.0.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/source/p/pyqt6/pyqt6-6.11.0.tar.gz",
+      "sha256": "45dd60aa69976de1918b5ced6b4e7b6a25abd2a919ecef5fd5826ecc76718889",
+      "size": 1087430,
+      "wheel": {
+        "distribution": "PyQt6",
+        "version": "6.11.0"
+      },
+      "checksum_source": "PyPI JSON API (sdist digest)",
+      "licence": "GPL-3.0-only",
+      "provides": "The PyQt6 Python bindings (PyQt6\\Qt*.pyd).",
+      "covers": [
+        "_internal/PyQt6/Qt*.pyd"
+      ]
+    },
+    {
+      "name": "PyQt6-sip 13.12.0",
+      "file": "pyqt6_sip-13.12.0.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/source/p/pyqt6-sip/pyqt6_sip-13.12.0.tar.gz",
+      "sha256": "a7ad45c1e3cec3a2473d37ea9870b6c3baeccc560298623c8eb59265714c06e2",
+      "size": 93979,
+      "wheel": {
+        "distribution": "PyQt6-sip",
+        "version": "13.12.0"
+      },
+      "checksum_source": "PyPI JSON API (sdist digest)",
+      "licence": "BSD-2-Clause",
+      "provides": "The sip support module that the PyQt6 bindings are built against (PyQt6\\sip.*.pyd).",
+      "notes": "Permissive; included because PyQt6 (GPL) is specifically designed to require it.",
+      "covers": [
+        "_internal/PyQt6/sip.*.pyd"
+      ]
+    },
+    {
+      "name": "Qt Base 6.11.2 (qtbase)",
+      "file": "qtbase-everywhere-src-6.11.2.tar.xz",
+      "url": "https://download.qt.io/official_releases/qt/6.11/6.11.2/submodules/qtbase-everywhere-src-6.11.2.tar.xz",
+      "sha256": "5b2e00eccaf5a4d8c14134ffa0ea8dfd0a35ae1ffc7f8d87fa4305a1ed23cf22",
+      "md5": "cb3b718e2e589b61bd781b4596604a5b",
+      "size": 50582668,
+      "wheel": {
+        "distribution": "PyQt6-Qt6",
+        "version": "6.11.2"
+      },
+      "checksum_source": "download.qt.io (MirrorBits ?sha256 and submodules/md5sums.txt)",
+      "licence": "LGPL-3.0-only (Qt), with third-party parts under their own licences (qt_attribution.json files inside)",
+      "provides": "Qt6Core, Qt6Gui, Qt6Network, Qt6Widgets and the generic, platform, style and GIF/ICO/JPEG image plugins.",
+      "covers": [
+        "_internal/PyQt6/Qt6/bin/Qt6Core.dll",
+        "_internal/PyQt6/Qt6/bin/Qt6Gui.dll",
+        "_internal/PyQt6/Qt6/bin/Qt6Network.dll",
+        "_internal/PyQt6/Qt6/bin/Qt6Widgets.dll",
+        "_internal/PyQt6/Qt6/plugins/generic/*",
+        "_internal/PyQt6/Qt6/plugins/platforms/*",
+        "_internal/PyQt6/Qt6/plugins/styles/*",
+        "_internal/PyQt6/Qt6/plugins/imageformats/qgif.dll",
+        "_internal/PyQt6/Qt6/plugins/imageformats/qico.dll",
+        "_internal/PyQt6/Qt6/plugins/imageformats/qjpeg.dll"
+      ]
+    },
+    {
+      "name": "Qt SVG 6.11.2 (qtsvg)",
+      "file": "qtsvg-everywhere-src-6.11.2.tar.xz",
+      "url": "https://download.qt.io/official_releases/qt/6.11/6.11.2/submodules/qtsvg-everywhere-src-6.11.2.tar.xz",
+      "sha256": "d594337feca84c26fb67fe87b85e6a5c12fda404b611d905f9d138210c311876",
+      "md5": "fb1c8366fe3de6ed3ca248bf4ae88c37",
+      "size": 2341860,
+      "wheel": {
+        "distribution": "PyQt6-Qt6",
+        "version": "6.11.2"
+      },
+      "checksum_source": "download.qt.io (MirrorBits ?sha256 and submodules/md5sums.txt)",
+      "licence": "LGPL-3.0-only",
+      "provides": "Qt6Svg and the SVG icon engine and image plugins.",
+      "covers": [
+        "_internal/PyQt6/Qt6/bin/Qt6Svg.dll",
+        "_internal/PyQt6/Qt6/plugins/iconengines/qsvgicon.dll",
+        "_internal/PyQt6/Qt6/plugins/imageformats/qsvg.dll"
+      ]
+    },
+    {
+      "name": "Qt Image Formats 6.11.2 (qtimageformats)",
+      "file": "qtimageformats-everywhere-src-6.11.2.tar.xz",
+      "url": "https://download.qt.io/official_releases/qt/6.11/6.11.2/submodules/qtimageformats-everywhere-src-6.11.2.tar.xz",
+      "sha256": "cecd8900f34b6550076309bc94f62f828008b633a4239e0a08c86788f41001f8",
+      "md5": "1ee7fdbcea183f3b00ca71d37ab5a1d7",
+      "size": 2050424,
+      "wheel": {
+        "distribution": "PyQt6-Qt6",
+        "version": "6.11.2"
+      },
+      "checksum_source": "download.qt.io (MirrorBits ?sha256 and submodules/md5sums.txt)",
+      "licence": "LGPL-3.0-only, with libtiff and libwebp (bundled, permissive)",
+      "provides": "The ICNS, TGA, TIFF, WBMP and WebP image plugins.",
+      "covers": [
+        "_internal/PyQt6/Qt6/plugins/imageformats/qicns.dll",
+        "_internal/PyQt6/Qt6/plugins/imageformats/qtga.dll",
+        "_internal/PyQt6/Qt6/plugins/imageformats/qtiff.dll",
+        "_internal/PyQt6/Qt6/plugins/imageformats/qwbmp.dll",
+        "_internal/PyQt6/Qt6/plugins/imageformats/qwebp.dll"
+      ]
+    },
+    {
+      "name": "Qt Translations 6.11.2 (qttranslations)",
+      "file": "qttranslations-everywhere-src-6.11.2.tar.xz",
+      "url": "https://download.qt.io/official_releases/qt/6.11/6.11.2/submodules/qttranslations-everywhere-src-6.11.2.tar.xz",
+      "sha256": "021684c1a7937a9fabc3b056a6698ad5978794caf9ac190fd6cc11399e67c014",
+      "md5": "03e0def8521d2481c6ec7e0d36b15d1a",
+      "size": 1691056,
+      "wheel": {
+        "distribution": "PyQt6-Qt6",
+        "version": "6.11.2"
+      },
+      "checksum_source": "download.qt.io (MirrorBits ?sha256 and submodules/md5sums.txt)",
+      "licence": "LGPL-3.0-only",
+      "provides": "The .ts sources of the Qt translation files (translations\\qtbase_*.qm).",
+      "covers": [
+        "_internal/PyQt6/Qt6/translations/*"
+      ]
+    },
+    {
+      "name": "libheif 1.23.4",
+      "file": "libheif-1.23.4.tar.gz",
+      "url": "https://github.com/strukturag/libheif/releases/download/v1.23.4/libheif-1.23.4.tar.gz",
+      "sha256": "d0c02b4b0e978f34a1974b6f3eea7975a537bf7a9195ffeea38e7242ff316fdd",
+      "size": 2217221,
+      "wheel": {
+        "distribution": "pillow-heif",
+        "version": "1.8.0"
+      },
+      "checksum_source": "GitHub release asset digest",
+      "licence": "LGPL-3.0-or-later (library)",
+      "provides": "The HEIF decoder library (libheif-*.dll). pillow-heif builds it with the recipe in its own source archive (libheif/windows/mingw-w64-libheif/PKGBUILD).",
+      "covers": [
+        "_internal/libheif-*.dll"
+      ]
+    },
+    {
+      "name": "pillow-heif 1.8.0",
+      "file": "pillow_heif-1.8.0.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/source/p/pillow-heif/pillow_heif-1.8.0.tar.gz",
+      "sha256": "e47c27432c6fd3d66c22f0de9f27fd379383b646c947520bc485854ce72060d0",
+      "size": 17395353,
+      "wheel": {
+        "distribution": "pillow-heif",
+        "version": "1.8.0"
+      },
+      "checksum_source": "PyPI JSON API (sdist digest)",
+      "licence": "BSD-3-Clause (package code)",
+      "provides": "The _pillow_heif binding and the Windows build recipe of the bundled libheif (the scripts that control its compilation).",
+      "covers": [
+        "_internal/_pillow_heif.*.pyd",
+        "_internal/libheif-*.dll"
+      ]
+    },
+    {
+      "name": "libde265 1.1.3 (MSYS2 package mingw-w64-libde265 1.1.3-1)",
+      "file": "mingw-w64-libde265-1.1.3-1.src.tar.zst",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libde265-1.1.3-1.src.tar.zst",
+      "sha256": "53afb489bf59cc6f31630cee418179394d4047d5a60be1315db523a1a357b162",
+      "size": 322826,
+      "wheel": {
+        "distribution": "pillow-heif",
+        "version": "1.8.0"
+      },
+      "checksum_source": "Pinned on 2026-09-29 (MSYS2 publishes no checksum for source packages). Contents checked: libde265-1.1.3.tar.gz inside has the SHA-256 of the GitHub release asset (554228bd...3905), as its PKGBUILD pins.",
+      "licence": "LGPL-3.0-or-later (library); MIT (examples)",
+      "provides": "The HEVC decoder library (libde265-*.dll) with the MSYS2 build recipe that produced the bundled DLL.",
+      "covers": [
+        "_internal/libde265-*.dll"
+      ],
+      "notes": "Contains the upstream libde265-1.1.3.tar.gz and the MSYS2 PKGBUILD."
+    },
+    {
+      "name": "x265 4.3 (MSYS2 package mingw-w64-x265 4.3-1)",
+      "file": "mingw-w64-x265-4.3-1.src.tar.zst",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-x265-4.3-1.src.tar.zst",
+      "sha256": "f2f94e2dd88cd9ce917bd68eb6cb3f41e15d63d56efbfa386416800efa3eae10",
+      "size": 2035612,
+      "wheel": {
+        "distribution": "pillow-heif",
+        "version": "1.8.0"
+      },
+      "checksum_source": "Pinned on 2026-09-29 (MSYS2 publishes no checksum for source packages). Contents checked: x265-4.3.tar.gz inside has the SHA-256 of the GitHub release asset x265_4.3.tar.gz (83c53e4c...b121), as its PKGBUILD pins.",
+      "licence": "GPL-2.0-or-later (conveyed under GPL-3.0)",
+      "provides": "The HEVC encoder library that libheif loads (libx265-*.dll), with the MSYS2 build recipe and patches.",
+      "covers": [
+        "_internal/libx265-*.dll"
+      ],
+      "notes": "Contains the upstream x265 4.3 tarball, the MSYS2 PKGBUILD and 0001-missing-include.patch. The DLL reports version 4.3+1-e9b8812."
+    },
+    {
+      "name": "GCC 16.2.0 runtime libraries (MSYS2 package mingw-w64-gcc 16.2.0-4)",
+      "file": "mingw-w64-gcc-16.2.0-4.src.tar.zst",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-gcc-16.2.0-4.src.tar.zst",
+      "sha256": "a1792a44764405bc365746e0e60f0daa122076cec0dddd35a781d141f94273cf",
+      "size": 107228968,
+      "wheel": {
+        "distribution": "pillow-heif",
+        "version": "1.8.0"
+      },
+      "checksum_source": "Pinned on 2026-09-29 (MSYS2 publishes no checksum for source packages). Contents checked: gcc-16.2.0.tar.xz with its GNU signature, the MSYS2 PKGBUILD (pkgrel 4) and patches.",
+      "licence": "GPL-3.0-or-later WITH GCC-exception-3.1",
+      "provides": "libgcc_s_seh-1 and libstdc++-6, shipped as separate DLLs with libheif, libde265 and x265.",
+      "covers": [
+        "_internal/libgcc_s_*.dll",
+        "_internal/libstdc++-*.dll"
+      ],
+      "notes": "The bundled DLLs carry 'GCC: (Rev4, Built by MSYS2 project) 16.2.0'. The GCC runtime inside SciPy and NumPy's OpenBLAS is linked statically under the GCC Runtime Library Exception and needs no source."
+    },
+    {
+      "name": "Eigen (commit 1d8b82b0) as built into ONNX Runtime 1.24.4",
+      "file": "eigen-1d8b82b0740839c0de7f1242a3585e3390ff5f33.zip",
+      "url": "https://github.com/eigen-mirror/eigen/archive/1d8b82b0740839c0de7f1242a3585e3390ff5f33/eigen-1d8b82b0740839c0de7f1242a3585e3390ff5f33.zip",
+      "sha256": "6a60d76351f97132669daeeb721d6bf14b008101883ad2d687a3201c5c461eb0",
+      "sha1": "05b19b49e6fbb91246be711d801160528c135e34",
+      "size": 4075744,
+      "wheel": {
+        "distribution": "onnxruntime-directml",
+        "version": "1.24.4"
+      },
+      "checksum_source": "SHA-1 as pinned in onnxruntime v1.24.4 cmake/deps.txt (checked on download); SHA-256 pinned on 2026-09-29.",
+      "licence": "MPL-2.0",
+      "provides": "The Eigen C++ template library compiled into ONNX Runtime (MIT); MPL-2.0 section 3.2(a) asks for its source to be available.",
+      "covers": [
+        "_internal/onnxruntime/capi/*.dll",
+        "_internal/onnxruntime/capi/*.pyd"
+      ],
+      "notes": "Eigen is header-only; this is the exact commit ONNX Runtime 1.24.4 builds with."
+    }
+  ]
+}

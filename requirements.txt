@@ -1,0 +1,19 @@
+# SPDX-FileCopyrightText: 2026 Optimey CommV
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+onnxruntime-directml==1.24.4
+numpy==2.5.3
+scipy==1.18.1
+pillow==12.3.0
+PyQt6==6.11.0
+# PyQt6 pulls these in; pinned because tools/third_party_sources.json ships the sources of
+# exactly these versions (build.ps1 fails when the venv has others).
+PyQt6-Qt6==6.11.2
+PyQt6-sip==13.12.0
+pillow-heif==1.8.0
+# Build only. The hooks package decides which DLLs are bundled, so it is pinned as well;
+# BackgroundEditor.spec then leaves out DirectML.dll, the VC++ runtime, Qt PDF and more.
+pyinstaller==6.22.3
+pyinstaller-hooks-contrib==2026.7
+pefile==2024.8.26

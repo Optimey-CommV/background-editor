@@ -1,0 +1,11 @@
+# SPDX-FileCopyrightText: 2026 Optimey CommV
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# Text files keep LF line endings on every platform, also on Windows with
+# core.autocrlf=true: build.ps1 checks LICENSE and tools/licenses/LGPL-3.0.txt by their
+# SHA-256, and the source zip should hold the files exactly as they are in the repository.
+* text=auto eol=lf
+
+*.ico binary
+*.jpg binary
+*.png binary

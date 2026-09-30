@@ -33,3 +33,15 @@ id_ed25519*
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Background Editor: local model evaluation (downloaded photos, caches, result sheets)
+bench/
+
+# Downloaded models and per-run data (never commit models)
+models/
+data/
+*.onnx
+*.part
+
+# Running from source with this file present switches to portable mode
+/portable.conf

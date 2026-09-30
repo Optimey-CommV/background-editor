@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+  <!--
+    Background Editor - simplified artwork for the 16, 20, 24 and 32 px icon frames.
+
+    Drawn on a 16-unit grid: 1 unit = 1 px at 16 px. Every straight edge that
+    matters (the split, the checker cells, the neck) sits on a multiple of 4
+    units, so it stays pixel-sharp at 16, 20, 24 and 32 px alike.
+    Compared with logo.svg this version drops the drop shadow, the cut line,
+    the bokeh and the fine strands, uses a vertical split, a bigger head and a
+    darker checker so the portrait and the transparency pattern survive at
+    16 px.
+    A mask is used instead of clipPath because QtSvg does not implement
+    clipPath; browsers and editors render both the same way.
+  -->
+  <defs>
+    <mask id="tile" maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="16">
+      <rect width="16" height="16" rx="3" fill="#FFFFFF"/>
+    </mask>
+    <linearGradient id="background" x1="0" y1="16" x2="8" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2FD0BC"/>
+      <stop offset="1" stop-color="#0E97B8"/>
+    </linearGradient>
+  </defs>
+
+  <g mask="url(#tile)">
+    <!-- right half: transparency checkerboard, 4-unit cells -->
+    <rect x="8" y="0" width="8" height="16" fill="#FFFFFF"/>
+    <path fill="#C3C9E6" d="M12 0h4v4h-4z M8 4h4v4h-4z M12 8h4v4h-4z M8 12h4v4h-4z"/>
+    <!-- left half: the original photo background -->
+    <rect x="0" y="0" width="8" height="16" fill="url(#background)"/>
+
+    <!-- shoulders -->
+    <path fill="#7E45F0" d="M1.5 16 C1.5 13.3 4 12 7 12 C10 12 12.5 13.3 12.5 16 Z"/>
+    <!-- hair: frames the face and streams to the right in two locks -->
+    <path fill="#22185A" d="M4 10.2 C3 8.6 2.9 6.2 3.4 4.8 C4.1 3 5.6 2 7.5 2 C9.5 2 10.6 3 11.6 4
+      C12.6 5 13.6 5 14.6 4.2 C14.2 5.6 13.2 6.3 12.2 6.3
+      C13 7.1 14.1 7.3 15 6.9 C14.3 8.6 12.6 9.4 10.8 9.4
+      C10.2 9.4 9.8 9.8 9.6 10.4 L5 9 C5 9.4 4.7 9.9 4 10.2 Z"/>
+    <!-- neck -->
+    <rect x="6" y="9" width="2" height="3" fill="#D9D0FA"/>
+    <!-- face -->
+    <path fill="#F4F0FF" d="M7 4.5 C8.4 4.5 9.2 5.5 9.2 6.8 C9.2 8.3 8.2 9.5 7 9.5 C5.8 9.5 4.8 8.3 4.8 6.8 C4.8 5.5 5.6 4.5 7 4.5 Z"/>
+    <!-- fringe, swept to the right -->
+    <path fill="#22185A" d="M4.6 6.3 C4.6 4.6 5.6 3.6 7.2 3.6 C9 3.6 9.9 4.8 9.6 7.4 C9.2 5.8 7 4.8 4.6 6.3 Z"/>
+  </g>
+
+  <!-- half-unit edge so the white checker cells do not melt into a light taskbar -->
+  <rect x="0.25" y="0.25" width="15.5" height="15.5" rx="2.75" fill="none" stroke="#2A2F5C" stroke-opacity="0.38" stroke-width="0.5"/>
+</svg>

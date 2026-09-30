@@ -1,0 +1,54 @@
+{
+ "captured": "2026-09-28 23:25 UTC (Date headers)",
+ "responses": {
+  "gh_releases": {
+   "status": 200,
+   "headers": {
+    "ETag": "W/\"465b985af55ebd23162ba0cbb0901f4bd9e18eef8b46cd06ef8fca8e57d1d57e\"",
+    "X-RateLimit-Limit": "60",
+    "X-RateLimit-Remaining": "56",
+    "X-RateLimit-Reset": "1790640387",
+    "Cache-Control": "public, max-age=60, s-maxage=60",
+    "Date": "Mon, 28 Sep 2026 23:25:22 GMT"
+   }
+  },
+  "gh_repos": {
+   "status": 200,
+   "headers": {
+    "ETag": "W/\"790ea81e64d438ee7823af14bb189cfb13968d1e98a377c03789f952aba86b67\"",
+    "X-RateLimit-Limit": "60",
+    "X-RateLimit-Remaining": "55",
+    "X-RateLimit-Reset": "1790640387",
+    "Cache-Control": "public, max-age=60, s-maxage=60",
+    "Date": "Mon, 28 Sep 2026 23:25:23 GMT"
+   }
+  },
+  "hf_author": {
+   "status": 200,
+   "headers": {
+    "ETag": "W/\"4e5d-2mhDTu0YDaOvuFU1djamU3mAtm8\"",
+    "RateLimit": "\"api\";r=499;t=97",
+    "RateLimit-Policy": "\"fixed window\";\"api\";q=500;w=300",
+    "Date": "Mon, 28 Sep 2026 23:25:23 GMT"
+   }
+  },
+  "hf_onnx": {
+   "status": 200,
+   "headers": {
+    "ETag": "W/\"31e5-TSRgc2NAnHIlmIZa4dfYxukshA8\"",
+    "RateLimit": "\"api\";r=498;t=97",
+    "RateLimit-Policy": "\"fixed window\";\"api\";q=500;w=300",
+    "Date": "Mon, 28 Sep 2026 23:25:23 GMT"
+   }
+  },
+  "hf_blobs_portrait_onnx": {
+   "status": 200,
+   "headers": {
+    "ETag": "W/\"804-crgSamgYUTl+EvDxLdbKvoQth1U\"",
+    "RateLimit": "\"api\";r=497;t=97",
+    "RateLimit-Policy": "\"fixed window\";\"api\";q=500;w=300",
+    "Date": "Mon, 28 Sep 2026 23:25:23 GMT"
+   }
+  }
+ }
+}

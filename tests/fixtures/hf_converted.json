@@ -1,0 +1,611 @@
+[
+ {
+  "id": "onnx-community/BiRefNet-COD-ONNX",
+  "author": "onnx-community",
+  "sha": "19e94ba49a925e9ca1227d56d2a3a422e34c8d84",
+  "lastModified": "2025-03-07T11:31:31.000Z",
+  "createdAt": "2024-08-19T15:08:33.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "transformers.js",
+   "onnx",
+   "birefnet",
+   "background-removal",
+   "mask-generation",
+   "Dichotomous Image Segmentation",
+   "Camouflaged Object Detection",
+   "Salient Object Detection",
+   "image-segmentation",
+   "base_model:ZhengPeng7/BiRefNet-COD",
+   "base_model:quantized:ZhengPeng7/BiRefNet-COD",
+   "license:mit",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "transformers.js",
+  "cardData": {
+   "license": "mit",
+   "base_model": [
+    "ZhengPeng7/BiRefNet-COD"
+   ],
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Dichotomous Image Segmentation",
+    "Camouflaged Object Detection",
+    "Salient Object Detection"
+   ],
+   "library_name": "transformers.js",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "onnx/model.onnx"
+   },
+   {
+    "rfilename": "onnx/model_fp16.onnx"
+   },
+   {
+    "rfilename": "preprocessor_config.json"
+   }
+  ]
+ },
+ {
+  "id": "onnx-community/BiRefNet-DIS5K-ONNX",
+  "author": "onnx-community",
+  "sha": "c99ba6fba16fd69458572c284bf2dadc0bb67ed8",
+  "lastModified": "2025-03-07T11:32:39.000Z",
+  "createdAt": "2024-08-19T15:09:18.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "transformers.js",
+   "onnx",
+   "birefnet",
+   "background-removal",
+   "mask-generation",
+   "Dichotomous Image Segmentation",
+   "Camouflaged Object Detection",
+   "Salient Object Detection",
+   "image-segmentation",
+   "base_model:ZhengPeng7/BiRefNet-DIS5K",
+   "base_model:quantized:ZhengPeng7/BiRefNet-DIS5K",
+   "license:mit",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "transformers.js",
+  "cardData": {
+   "license": "mit",
+   "base_model": [
+    "ZhengPeng7/BiRefNet-DIS5K"
+   ],
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Dichotomous Image Segmentation",
+    "Camouflaged Object Detection",
+    "Salient Object Detection"
+   ],
+   "library_name": "transformers.js",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "onnx/model.onnx"
+   },
+   {
+    "rfilename": "onnx/model_fp16.onnx"
+   },
+   {
+    "rfilename": "preprocessor_config.json"
+   }
+  ]
+ },
+ {
+  "id": "onnx-community/BiRefNet_lite-ONNX",
+  "author": "onnx-community",
+  "sha": "de15b22ba131738a16dff04aab8bdf8dc32e3ac1",
+  "lastModified": "2025-10-26T21:36:18.000Z",
+  "createdAt": "2024-08-19T15:09:59.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "transformers.js",
+   "onnx",
+   "swin",
+   "background-removal",
+   "mask-generation",
+   "Dichotomous Image Segmentation",
+   "Camouflaged Object Detection",
+   "Salient Object Detection",
+   "image-segmentation",
+   "base_model:ZhengPeng7/BiRefNet_lite",
+   "base_model:quantized:ZhengPeng7/BiRefNet_lite",
+   "license:mit",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "transformers.js",
+  "cardData": {
+   "license": "mit",
+   "base_model": [
+    "ZhengPeng7/BiRefNet_lite"
+   ],
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Dichotomous Image Segmentation",
+    "Camouflaged Object Detection",
+    "Salient Object Detection"
+   ],
+   "library_name": "transformers.js",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "onnx/model.onnx"
+   },
+   {
+    "rfilename": "onnx/model_fp16.onnx"
+   },
+   {
+    "rfilename": "preprocessor_config.json"
+   }
+  ]
+ },
+ {
+  "id": "onnx-community/BiRefNet-ONNX",
+  "author": "onnx-community",
+  "sha": "534d3c82d3bb8b2f0867db6dfbc3a525b8e42f67",
+  "lastModified": "2025-03-07T11:29:49.000Z",
+  "createdAt": "2024-08-19T15:10:10.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "transformers.js",
+   "onnx",
+   "birefnet",
+   "background-removal",
+   "mask-generation",
+   "Dichotomous Image Segmentation",
+   "Camouflaged Object Detection",
+   "Salient Object Detection",
+   "image-segmentation",
+   "base_model:ZhengPeng7/BiRefNet",
+   "base_model:quantized:ZhengPeng7/BiRefNet",
+   "license:mit",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "transformers.js",
+  "cardData": {
+   "license": "mit",
+   "base_model": [
+    "ZhengPeng7/BiRefNet"
+   ],
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Dichotomous Image Segmentation",
+    "Camouflaged Object Detection",
+    "Salient Object Detection"
+   ],
+   "library_name": "transformers.js",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "onnx/model.onnx"
+   },
+   {
+    "rfilename": "onnx/model_fp16.onnx"
+   },
+   {
+    "rfilename": "preprocessor_config.json"
+   }
+  ]
+ },
+ {
+  "id": "onnx-community/BiRefNet-HRSOD_DHU-ONNX",
+  "author": "onnx-community",
+  "sha": "c6358c318c38de192d85abc15608ac44af2e3128",
+  "lastModified": "2025-03-07T11:33:33.000Z",
+  "createdAt": "2024-08-19T15:10:51.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "transformers.js",
+   "onnx",
+   "birefnet",
+   "background-removal",
+   "mask-generation",
+   "Dichotomous Image Segmentation",
+   "Camouflaged Object Detection",
+   "Salient Object Detection",
+   "image-segmentation",
+   "base_model:ZhengPeng7/BiRefNet-HRSOD",
+   "base_model:quantized:ZhengPeng7/BiRefNet-HRSOD",
+   "license:mit",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "transformers.js",
+  "cardData": {
+   "license": "mit",
+   "base_model": [
+    "ZhengPeng7/BiRefNet-HRSOD"
+   ],
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Dichotomous Image Segmentation",
+    "Camouflaged Object Detection",
+    "Salient Object Detection"
+   ],
+   "library_name": "transformers.js",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "onnx/model.onnx"
+   },
+   {
+    "rfilename": "onnx/model_fp16.onnx"
+   },
+   {
+    "rfilename": "preprocessor_config.json"
+   }
+  ]
+ },
+ {
+  "id": "onnx-community/BiRefNet-DIS5K-TR_TEs-ONNX",
+  "author": "onnx-community",
+  "sha": "4b637fff93a93176aa5dc22e1361b10a7fb506f6",
+  "lastModified": "2025-03-07T11:32:05.000Z",
+  "createdAt": "2024-08-19T15:11:26.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "transformers.js",
+   "onnx",
+   "birefnet",
+   "background-removal",
+   "mask-generation",
+   "Dichotomous Image Segmentation",
+   "Camouflaged Object Detection",
+   "Salient Object Detection",
+   "image-segmentation",
+   "base_model:ZhengPeng7/BiRefNet-DIS5K-TR_TEs",
+   "base_model:quantized:ZhengPeng7/BiRefNet-DIS5K-TR_TEs",
+   "license:mit",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "transformers.js",
+  "cardData": {
+   "license": "mit",
+   "base_model": [
+    "ZhengPeng7/BiRefNet-DIS5K-TR_TEs"
+   ],
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Dichotomous Image Segmentation",
+    "Camouflaged Object Detection",
+    "Salient Object Detection"
+   ],
+   "library_name": "transformers.js",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "onnx/model.onnx"
+   },
+   {
+    "rfilename": "onnx/model_fp16.onnx"
+   },
+   {
+    "rfilename": "preprocessor_config.json"
+   }
+  ]
+ },
+ {
+  "id": "onnx-community/BiRefNet-portrait-ONNX",
+  "author": "onnx-community",
+  "sha": "dd7167f6a8b54ff7efc29a4c988938d79866464f",
+  "lastModified": "2025-03-07T11:30:46.000Z",
+  "createdAt": "2024-08-19T15:12:06.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "transformers.js",
+   "onnx",
+   "birefnet",
+   "background-removal",
+   "mask-generation",
+   "Dichotomous Image Segmentation",
+   "Camouflaged Object Detection",
+   "Salient Object Detection",
+   "image-segmentation",
+   "base_model:ZhengPeng7/BiRefNet-portrait",
+   "base_model:quantized:ZhengPeng7/BiRefNet-portrait",
+   "license:mit",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "transformers.js",
+  "cardData": {
+   "license": "mit",
+   "base_model": [
+    "ZhengPeng7/BiRefNet-portrait"
+   ],
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Dichotomous Image Segmentation",
+    "Camouflaged Object Detection",
+    "Salient Object Detection"
+   ],
+   "library_name": "transformers.js",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "onnx/model.onnx"
+   },
+   {
+    "rfilename": "onnx/model_fp16.onnx"
+   },
+   {
+    "rfilename": "preprocessor_config.json"
+   }
+  ]
+ },
+ {
+  "id": "onnx-community/BiRefNet_512x512-ONNX",
+  "author": "onnx-community",
+  "sha": "b0b30aff33d009f6bcd7dacdc3cdcf2f8f42175b",
+  "lastModified": "2025-03-07T11:34:08.000Z",
+  "createdAt": "2025-03-02T17:20:16.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "transformers.js",
+   "onnx",
+   "birefnet",
+   "background-removal",
+   "mask-generation",
+   "Dichotomous Image Segmentation",
+   "Camouflaged Object Detection",
+   "Salient Object Detection",
+   "image-segmentation",
+   "base_model:ZhengPeng7/BiRefNet_512x512",
+   "base_model:quantized:ZhengPeng7/BiRefNet_512x512",
+   "license:mit",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "transformers.js",
+  "cardData": {
+   "license": "mit",
+   "base_model": [
+    "ZhengPeng7/BiRefNet_512x512"
+   ],
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Dichotomous Image Segmentation",
+    "Camouflaged Object Detection",
+    "Salient Object Detection"
+   ],
+   "library_name": "transformers.js",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "onnx/model.onnx"
+   },
+   {
+    "rfilename": "onnx/model_fp16.onnx"
+   },
+   {
+    "rfilename": "preprocessor_config.json"
+   }
+  ]
+ },
+ {
+  "id": "onnx-community/BiRefNet_dynamic-1024x1024-ONNX",
+  "author": "onnx-community",
+  "sha": "6defd3a19cec21042b178108815c9c4508d09867",
+  "lastModified": "2026-09-04T03:33:12.000Z",
+  "createdAt": "2026-09-01T09:08:54.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "transformers.js",
+   "onnx",
+   "birefnet",
+   "background-removal",
+   "mask-generation",
+   "Dichotomous Image Segmentation",
+   "Camouflaged Object Detection",
+   "Salient Object Detection",
+   "image-segmentation",
+   "base_model:ZhengPeng7/BiRefNet_dynamic",
+   "base_model:quantized:ZhengPeng7/BiRefNet_dynamic",
+   "license:mit",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "transformers.js",
+  "cardData": {
+   "license": "mit",
+   "base_model": [
+    "ZhengPeng7/BiRefNet_dynamic"
+   ],
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Dichotomous Image Segmentation",
+    "Camouflaged Object Detection",
+    "Salient Object Detection"
+   ],
+   "library_name": "transformers.js",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "onnx/model.onnx"
+   },
+   {
+    "rfilename": "onnx/model_fp16.onnx"
+   },
+   {
+    "rfilename": "preprocessor_config.json"
+   }
+  ]
+ },
+ {
+  "id": "onnx-community/BiRefNet_dynamic-1024x1024-ONNX-CUDA",
+  "author": "onnx-community",
+  "sha": "5e8a5a4aa9b0e0342a22ef6e47e456dd4fd9c4b9",
+  "lastModified": "2026-09-04T03:33:22.000Z",
+  "createdAt": "2026-09-01T09:46:30.000Z",
+  "gated": false,
+  "private": false,
+  "tags": [
+   "onnxruntime",
+   "onnx",
+   "background-removal",
+   "mask-generation",
+   "Dichotomous Image Segmentation",
+   "Camouflaged Object Detection",
+   "Salient Object Detection",
+   "cuda",
+   "triton",
+   "image-segmentation",
+   "base_model:ZhengPeng7/BiRefNet_dynamic",
+   "base_model:quantized:ZhengPeng7/BiRefNet_dynamic",
+   "license:mit",
+   "region:us"
+  ],
+  "pipeline_tag": "image-segmentation",
+  "library_name": "onnxruntime",
+  "cardData": {
+   "license": "mit",
+   "base_model": [
+    "ZhengPeng7/BiRefNet_dynamic"
+   ],
+   "tags": [
+    "background-removal",
+    "mask-generation",
+    "Dichotomous Image Segmentation",
+    "Camouflaged Object Detection",
+    "Salient Object Detection",
+    "onnx",
+    "onnxruntime",
+    "cuda",
+    "triton"
+   ],
+   "library_name": "onnxruntime",
+   "pipeline_tag": "image-segmentation"
+  },
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "manifest.json"
+   },
+   {
+    "rfilename": "onnx/model.onnx"
+   }
+  ]
+ }
+]
