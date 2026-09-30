@@ -1,0 +1,28 @@
+# SPDX-FileCopyrightText: 2026 Joost Meyfroodt
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# Once per clone:  pip install pre-commit && pre-commit install
+# All files:       pre-commit run --all-files
+#                  (the gitleaks hook only scans staged changes, even here)
+# Full history:    gitleaks git -v .  (CI: .github/workflows/checks.yml)
+# Newer versions:  pre-commit autoupdate --freeze
+
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: 83d9cd684c87d95d656c1458ef04895a7f1cbd8e  # frozen: v8.30.1
+    hooks:
+      - id: gitleaks
+  - repo: https://github.com/fsfe/reuse-tool
+    rev: 9fabf9eb815a57aac116b435e8346c200cdb8604  # frozen: v6.2.0
+    hooks:
+      - id: reuse
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: 3e8a8703264a2f4a69428a0aa4dcb512790b2c8c  # frozen: v6.0.0
+    hooks:
+      - id: detect-private-key
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: end-of-file-fixer
+        exclude: ^LICENSES?(/|$)
+      - id: trailing-whitespace
+        exclude: ^LICENSES?(/|$)

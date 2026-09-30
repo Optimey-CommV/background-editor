@@ -1,0 +1,19 @@
+# SPDX-FileCopyrightText: 2026 Joost Meyfroodt
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# Gitleaks configuration: all default rules, plus one rule that flags private
+# IPv4 addresses (RFC 1918). Real addresses belong in local configuration, not
+# in code or in history. Use the RFC 5737 documentation ranges in examples.
+# For a deliberate exception, put "gitleaks:allow" in a comment on that line.
+
+title = "Optimey gitleaks configuration"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "private-ipv4-address"
+description = "Private IPv4 address (RFC 1918)"
+regex = '''\b(?:10(?:\.(?:25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|172\.(?:1[6-9]|2[0-9]|3[01])(?:\.(?:25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){2}|192\.168(?:\.(?:25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){2})\b'''
+keywords = ["10.", "172.", "192.168."]
+tags = ["network", "infrastructure"]
