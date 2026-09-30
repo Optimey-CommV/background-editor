@@ -458,7 +458,9 @@ class _Session:
 
     def get(self, url: str, conditional: bool = False, limit: int = _API_LIMIT) -> bytes | None:
         """The body, or None for 304 Not Modified (conditional requests only)."""
-        headers = {"Accept": "application/json"} if "/api" in url or "api.github.com" in url else {}
+        parts = urllib.parse.urlsplit(url)
+        is_api = parts.hostname == "api.github.com" or parts.path.startswith("/api/")
+        headers = {"Accept": "application/json"} if is_api else {}
         if conditional and self.etags.get(url):
             headers["If-None-Match"] = self.etags[url]
         reply = self.request(url, headers=headers, limit=limit)
