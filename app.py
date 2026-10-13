@@ -691,14 +691,14 @@ def _self_test(report_path: str, photo: str | None = None, out_dir: str | None =
     def app_update_check():
         # The update code loads in the bundle, and WinVerifyTrust answers through ctypes. The
         # self-test runs before build.ps1 signs the exe, so the packaged exe is expected to be
-        # unsigned here (or signed by the pinned certificate on a rebuild of a signed folder).
+        # unsigned here (or signed by a pinned certificate on a rebuild of a signed folder).
         # The manifest parser reads a small unsigned sample (the signature is checked apart).
-        from bgeditor import SIGNER_CERT_SHA256, UPDATE_REPO, app_updates
+        from bgeditor import UPDATE_REPO, app_updates
 
         target = sys.executable if frozen else os.path.join(os.environ.get("SystemRoot", r"C:\Windows"), "explorer.exe")
         result = app_updates.check_signature(target)
         expected = (0, app_updates.TRUST_E_NOSIGNATURE) if frozen else (0,)
-        works = result.code in expected and (result.ok == (result.cert_sha256 == SIGNER_CERT_SHA256))
+        works = result.code in expected and (result.ok == (result.cert_sha256.upper() in app_updates.signer_pins()))
         helper_ascii = app_updates.PORTABLE_HELPER.isascii()
         sample = (
             "# Background Editor release manifest (self-test sample)\n"

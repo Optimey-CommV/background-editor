@@ -195,13 +195,14 @@ def sign_files(*files: Path) -> str:
 
 @contextlib.contextmanager
 def pinned_to(pin: str):
-    """Make the app trust `pin` (it reads bgeditor.SIGNER_CERT_SHA256 when it checks)."""
-    saved = bgeditor.SIGNER_CERT_SHA256
-    bgeditor.SIGNER_CERT_SHA256 = pin
+    """Make the app trust only `pin` (it reads bgeditor.SIGNER_CERT_SHA256 and
+    SIGNER_CERTS_ACCEPTED when it checks)."""
+    saved = (bgeditor.SIGNER_CERT_SHA256, bgeditor.SIGNER_CERTS_ACCEPTED)
+    bgeditor.SIGNER_CERT_SHA256, bgeditor.SIGNER_CERTS_ACCEPTED = pin, ()
     try:
         yield
     finally:
-        bgeditor.SIGNER_CERT_SHA256 = saved
+        bgeditor.SIGNER_CERT_SHA256, bgeditor.SIGNER_CERTS_ACCEPTED = saved
 
 
 # ------------------------------------------------------------------ helpers
@@ -209,7 +210,8 @@ def pinned_to(pin: str):
 def temp_app(tmp: Path, portable: bool = True, pin: str | None = None):
     """An app folder in tmp; data (and, installed, the user profile folder) go there too.
     With pin, the app trusts that certificate instead of Optimey's for the duration."""
-    saved = (paths.app_dir, paths.user_data_dir, os.environ.get("BGEDITOR_PORTABLE"), bgeditor.SIGNER_CERT_SHA256)
+    saved = (paths.app_dir, paths.user_data_dir, os.environ.get("BGEDITOR_PORTABLE"), bgeditor.SIGNER_CERT_SHA256,
+             bgeditor.SIGNER_CERTS_ACCEPTED)
     saved_updates = (app_updates._transport, app_updates._asset_transport, app_updates.self_update_blocker)
     app = tmp / "BackgroundEditor"
     app.mkdir(parents=True, exist_ok=True)
@@ -219,7 +221,7 @@ def temp_app(tmp: Path, portable: bool = True, pin: str | None = None):
     paths.is_portable.cache_clear()
     paths.portable_config.cache_clear()
     if pin is not None:
-        bgeditor.SIGNER_CERT_SHA256 = pin
+        bgeditor.SIGNER_CERT_SHA256, bgeditor.SIGNER_CERTS_ACCEPTED = pin, ()
     try:
         yield app
     finally:
@@ -228,7 +230,7 @@ def temp_app(tmp: Path, portable: bool = True, pin: str | None = None):
             os.environ.pop("BGEDITOR_PORTABLE", None)
         else:
             os.environ["BGEDITOR_PORTABLE"] = saved[2]
-        bgeditor.SIGNER_CERT_SHA256 = saved[3]
+        bgeditor.SIGNER_CERT_SHA256, bgeditor.SIGNER_CERTS_ACCEPTED = saved[3], saved[4]
         app_updates._transport, app_updates._asset_transport, app_updates.self_update_blocker = saved_updates
         paths.is_portable.cache_clear()
         paths.portable_config.cache_clear()
@@ -1665,8 +1667,19 @@ def test_signature_verdict_rules():
     assert not v(0, "", 0, pinned="")[0] and not v(0, OLD_SHA1_THUMBPRINT, 0, pinned=OLD_SHA1_THUMBPRINT)[0]
     # The default pin is read at call time.
     with pinned_to(other):
-        assert v(0, other, 0)[0] and not v(0, pin, 0)[0]
+        assert v(0, other, 0)[0] and not v(0, pin, 0)[0] and app_updates.signer_pins() == (other,)
     assert v(0, pin, 0)[0]
+    # Both Optimey certificates are trusted by default; the build's own certificate is the first.
+    second = "180E01743637A8FBE9BB6F556BAC8431790D8381F4E12F46F7FD09C137440224"
+    assert app_updates.signer_pins() == (pin, second) and bgeditor.SIGNER_CERTS_ACCEPTED == (pin, second)
+    assert v(0, second, 0)[0] and v(0, second.lower(), 0)[0]
+    assert v(app_updates.CERT_E_UNTRUSTEDROOT, second, 0x20)[0] and v(app_updates.CERT_E_CHAINING, second, 0x10000)[0]
+    assert not v(app_updates.CERT_E_CHAINING, second, 0x10000 | 0x4)[0]
+    for code in (app_updates.TRUST_E_NOSIGNATURE, app_updates.TRUST_E_BAD_DIGEST, app_updates.CERT_E_EXPIRED):
+        assert not v(code, second, 0)[0], hex(code)
+    # An explicit pin (or list of pins) replaces the defaults.
+    assert not v(0, second, 0, pinned=pin)[0] and v(0, second, 0, pinned=(pin, second))[0]
+    assert not v(0, other, 0, pinned=(pin, second))[0] and not v(0, pin, 0, pinned=())[0]
 
 
 def test_sha256_pin(tmp: Path):

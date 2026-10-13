@@ -168,9 +168,16 @@ folder, such as the helper's log, stays.
 
 ### Replacing the signing key
 
-The certificate the app trusts is fixed in each version (`SIGNER_CERT_SHA256` in
-`bgeditor/__init__.py`). To retire the signing key, because it may have leaked or because the
-certificate expires (September 2031):
+The certificates the app trusts are fixed in each version (`SIGNER_CERTS_ACCEPTED` in
+`bgeditor/__init__.py`; `SIGNER_CERT_SHA256` is the one the build signs with and is always
+trusted too). The current list holds two certificates with the same name and CA: the first
+one, and a second one that takes over from it because the first key cannot be exported from
+the PC it was made on. A copy whose list holds both accepts updates signed with either, so
+the first release with this list is signed with the first key (a normal `.\build.ps1`), and
+later releases can be signed with the second.
+
+To retire a signing key, because it may have leaked or because the certificate expires
+(September 2031), drop it from `SIGNER_CERTS_ACCEPTED` and:
 
 1. Make a new code signing certificate and put the SHA-256 of its DER encoding in
    `SIGNER_CERT_SHA256`.

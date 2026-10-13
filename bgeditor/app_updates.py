@@ -29,9 +29,9 @@ The signed release manifest BackgroundEditor-<version>-manifest.ps1 that build.p
 the root of trust, not GitHub: GitHub's 'digest' is computed over whatever was uploaded, so
 it only proves the download arrived intact. A newer release is announced only when its
 manifest verifies: the check downloads it (a few kB) and checks it before it says anything.
-Its Authenticode signature must be intact and made by exactly the certificate whose SHA-256
-is bgeditor.SIGNER_CERT_SHA256 (read when it is needed; the CA behind it is private, so an
-untrusted or unknown root is accepted, but only together with that pin). The manifest is a
+Its Authenticode signature must be intact and made by exactly one of the certificates whose
+SHA-256 is in bgeditor.SIGNER_CERTS_ACCEPTED (read when it is needed; the CA behind them is
+private, so an untrusted or unknown root is accepted, but only together with such a pin). The manifest is a
 PowerShell file that holds data only; it is never run, only the JSON inside its
 single-quoted here-string is read, and any other statement makes it invalid. Its version
 must be the release's version and newer than this copy, and GitHub's size (and digest, when
@@ -83,7 +83,7 @@ import time
 import zipfile
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable
+from typing import Callable, Sequence
 
 from . import UPDATE_REPO, __version__, models, paths, updates
 
@@ -282,11 +282,30 @@ def current_version() -> str:
 
 
 def signer_pin() -> str:
-    """The SHA-256 of the certificate that must have signed an update (upper-case hex).
+    """The SHA-256 of the certificate this version's build signs with (upper-case hex).
     Read from bgeditor.SIGNER_CERT_SHA256 each time it is needed, never bound at import."""
     import bgeditor
 
     return str(getattr(bgeditor, "SIGNER_CERT_SHA256", "") or "")
+
+
+def signer_pins() -> tuple[str, ...]:
+    """The SHA-256 of every certificate an update may be signed with (upper-case hex):
+    signer_pin() and bgeditor.SIGNER_CERTS_ACCEPTED, read each time they are needed."""
+    import bgeditor
+
+    pins = [signer_pin(), *(getattr(bgeditor, "SIGNER_CERTS_ACCEPTED", ()) or ())]
+    return tuple(dict.fromkeys(str(p).upper() for p in pins if p))
+
+
+def _pin_set(pinned: str | Sequence[str] | None) -> frozenset[str]:
+    """The pins a signer may match: signer_pins() for None, else the given pin or pins.
+    Anything that is not 64 characters long (an empty pin, a SHA-1 thumbprint) never matches."""
+    if pinned is None:
+        pinned = signer_pins()
+    elif isinstance(pinned, str):
+        pinned = (pinned,)
+    return frozenset(p.upper() for p in pinned if isinstance(p, str) and len(p) == 64)
 
 
 def download_user_agent() -> str:
@@ -875,13 +894,13 @@ def parse_manifest(data: bytes, signed: bool = True) -> ReleaseManifest:
     return ReleaseManifest(version, built, minimum, setup, portable, hashlib.sha256(data).hexdigest())
 
 
-def verify_manifest(path: Path | str, pinned: str | None = None) -> ReleaseManifest:
+def verify_manifest(path: Path | str, pinned: str | Sequence[str] | None = None) -> ReleaseManifest:
     """The release manifest in `path`, after its Authenticode signature passed the pin
-    (default: signer_pin(), read now). The file is held open against changes while it is
+    (default: signer_pins(), read now). The file is held open against changes while it is
     read and checked, so the bytes that are parsed are the bytes whose signature was checked.
     Raises ManifestError (or ManifestFormatError for a signed manifest of an unknown format)."""
     path = Path(path)
-    pinned = signer_pin() if pinned is None else pinned
+    pinned = signer_pins() if pinned is None else pinned
     if sys.platform != "win32":
         raise ManifestError("the release manifest can only be checked on Windows")
     try:
@@ -1403,15 +1422,16 @@ class SignatureCheck:
     chain_errors: int = 0  # CERT_TRUST_* error bits of the signer's chain
 
 
-def signature_verdict(code: int, cert_sha256: str, chain_errors: int, pinned: str | None = None) -> tuple[bool, str]:
+def signature_verdict(
+    code: int, cert_sha256: str, chain_errors: int, pinned: str | Sequence[str] | None = None
+) -> tuple[bool, str]:
     """Decide on WinVerifyTrust's result. The signature must be present and intact, and the
-    signer must be the pinned certificate (by the SHA-256 of its DER encoding; default:
-    signer_pin(), read now). A root this PC does not know or trust is fine only together with
-    that pin; a trusted chain with another signer is refused too."""
+    signer must be a pinned certificate (by the SHA-256 of its DER encoding; default:
+    signer_pins(), read now). A root this PC does not know or trust is fine only together with
+    such a pin; a trusted chain with another signer is refused too."""
     code &= 0xFFFFFFFF
-    pinned = (signer_pin() if pinned is None else pinned or "").upper()
     found = (cert_sha256 or "").upper()
-    matches = bool(found) and len(pinned) == 64 and found == pinned
+    matches = bool(found) and found in _pin_set(pinned)
     if code == 0:
         if matches:
             return True, "signed by the Optimey code signing certificate"
@@ -1528,10 +1548,10 @@ def _hold_readonly(path: Path):
         kernel32.CloseHandle(handle)
 
 
-def check_signature(path: Path | str, pinned: str | None = None) -> SignatureCheck:
+def check_signature(path: Path | str, pinned: str | Sequence[str] | None = None) -> SignatureCheck:
     """The Authenticode check of one file (see signature_verdict and, for PE files,
     pe_signature_problem), with the file held open against changes. `pinned` defaults to
-    signer_pin(), read now. Never raises."""
+    signer_pins(), read now. Never raises."""
     path = Path(path)
     if sys.platform != "win32":
         return SignatureCheck(False, "signatures can only be checked on Windows")
@@ -1544,7 +1564,7 @@ def check_signature(path: Path | str, pinned: str | None = None) -> SignatureChe
         return SignatureCheck(False, f"the file cannot be opened for the check ({updates._short(exc)})")
 
 
-def _check_held(path: Path, pinned: str | None) -> SignatureCheck:
+def _check_held(path: Path, pinned: str | Sequence[str] | None) -> SignatureCheck:
     """check_signature for a file the caller holds open with _hold_readonly."""
     try:
         problem = pe_signature_problem(path)
