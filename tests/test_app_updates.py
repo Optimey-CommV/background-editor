@@ -1693,15 +1693,23 @@ def test_sha256_pin(tmp: Path):
     r = app_updates.check_signature(SIGNED_EXE)
     assert r.ok and r.cert_sha256 == SIGNER_CERT_SHA256 and "Optimey" in r.subject, r
     assert not app_updates.check_signature(SIGNED_EXE, pinned=OLD_SHA1_THUMBPRINT).ok
-    out = powershell(
-        "$c = Get-ChildItem Cert:\\CurrentUser\\My | Where-Object { $_.Thumbprint -eq '" + OLD_SHA1_THUMBPRINT + "' }\n"
-        "if ($c) { -join ([Security.Cryptography.SHA256]::Create().ComputeHash($c.RawData) | ForEach-Object { $_.ToString('X2') }) }"
-    )
-    if out.stdout.strip():  # the certificate is on this PC: the pin is its SHA-256
-        assert out.stdout.strip() == SIGNER_CERT_SHA256, out.stdout
-    # build.ps1 signs with the certificate that has this SHA-256, read from bgeditor/__init__.py.
+    # build.ps1 signs with a pinned certificate, read from bgeditor/__init__.py, and opens it by
+    # its thumbprint path; every pin has a thumbprint there, and the store is never listed.
     build = (ROOT / "build.ps1").read_text(encoding="utf-8")
-    assert "SIGNER_CERT_SHA256" in build and OLD_SHA1_THUMBPRINT not in build
+    assert "SIGNER_CERT_SHA256" in build and "SIGNER_CERTS_ACCEPTED" in build
+    assert "Get-ChildItem Cert:" not in build and "Cert:\\CurrentUser\\My\\$" in build
+    thumbs = dict(re.findall(r'"([0-9A-F]{64})"\s*=\s*"([0-9A-F]{40})"', build))
+    assert set(thumbs) == set(app_updates.signer_pins()) and thumbs[SIGNER_CERT_SHA256] == OLD_SHA1_THUMBPRINT, thumbs
+    # A certificate this PC has, opened by its path: its SHA-256 is the pin listed for it.
+    out = powershell(
+        "foreach ($t in $args) { $p = 'Cert:\\CurrentUser\\My\\' + $t\n"
+        "  if (Test-Path -LiteralPath $p) {\n"
+        "    $t + ' ' + (-join ([Security.Cryptography.SHA256]::Create().ComputeHash((Get-Item -LiteralPath $p).RawData) |"
+        " ForEach-Object { $_.ToString('X2') })) } }",
+        *thumbs.values(),
+    )
+    found = [line.split() for line in out.stdout.splitlines() if line.strip()]
+    assert out.returncode == 0 and all(len(f) == 2 and thumbs.get(f[1]) == f[0] for f in found), (found, out.stderr)
     # The tests never sign with a certificate from a store: their signers make theirs in memory.
     for script in (_SIGNER_SCRIPT, _MAKE_CERTS):
         assert "Cert:" not in script and "Import-" not in script and "X509Store" not in script

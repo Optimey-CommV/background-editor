@@ -12,8 +12,8 @@
                                         # only copies of 1.2.0 or newer may update to this
                                         # build automatically (default 1.1.0)
         .\build.ps1 -CertSha256 <SHA-256>
-                                        # sign with another certificate than the one the
-                                        # app pins (only for the key-rotation release; see
+                                        # sign with that certificate; one the app does not
+                                        # pin only for the key-rotation release (see
                                         # README.md, "Replacing the signing key")
 
     Results in dist\:
@@ -34,8 +34,11 @@
     The version comes from __version__ in bgeditor\__init__.py, which the spec and
     installer.iss read as well. -Version overrides it for one build: the exe's version
     resource, About, the download User-Agent and the installer all get the override.
-    The signing certificate is the one in CurrentUser\My whose SHA-256 (of its DER encoding)
-    is SIGNER_CERT_SHA256 in bgeditor\__init__.py, the certificate the app pins.
+    The signing certificate is one the app pins (SIGNER_CERT_SHA256 and SIGNER_CERTS_ACCEPTED
+    in bgeditor\__init__.py, by the SHA-256 of its DER encoding): SIGNER_CERT_SHA256 when this
+    PC has it, else the first other accepted one it has. It is opened by its path
+    Cert:\CurrentUser\My\<SHA-1 thumbprint> ($signingThumbprints below) and its SHA-256 is
+    checked; the store is never listed.
 
     Needs: the project venv (.venv) with the packages in requirements.txt, Inno Setup 6
     (ISCC.exe) for the installer, the code signing certificate in CurrentUser\My for
@@ -87,16 +90,33 @@ if ($Version -notmatch '^\d+(\.\d+){0,3}([-+][0-9A-Za-z.-]+)?$') {
 if ($MinUpdateFrom -and $MinUpdateFrom -notmatch '^\d+(\.\d+){0,3}$') {
     throw "MinUpdateFrom '$MinUpdateFrom' does not look like 1.2.3"
 }
-# The certificate the app pins; the build signs with it unless -CertSha256 says otherwise.
+# The certificates the app pins: SIGNER_CERT_SHA256 first, then the rest of SIGNER_CERTS_ACCEPTED.
 $pinLine = Select-String -Path $init -Pattern '^SIGNER_CERT_SHA256\s*=\s*"([0-9A-Fa-f]{64})"' | Select-Object -First 1
 if (-not $pinLine) { throw "No SIGNER_CERT_SHA256 = `"...`" found in $init" }
 $pin = $pinLine.Matches[0].Groups[1].Value.ToUpperInvariant()
+$acceptedBlock = [regex]::Match((Get-Content -Raw $init), '(?m)^SIGNER_CERTS_ACCEPTED\s*=\s*\(([^)]*)\)')
+if (-not $acceptedBlock.Success) { throw "No SIGNER_CERTS_ACCEPTED = (...) found in $init" }
+$accepted = @(@($pin) + @([regex]::Matches($acceptedBlock.Groups[1].Value, '"([0-9A-Fa-f]{64})"') |
+    ForEach-Object { $_.Groups[1].Value.ToUpperInvariant() }) | Select-Object -Unique)
+
+# The SHA-1 thumbprint of each signing certificate, by its SHA-256. The build opens
+# Cert:\CurrentUser\My\<thumbprint> directly and never lists the store.
+$signingThumbprints = @{
+    "60F4CFB0C10D0D3247E29E460027F798981ED56A95BAA27F86779BF541C40C5A" = "DC5A657A60F166815ACDA04E71581F7313553BEA"
+    "180E01743637A8FBE9BB6F556BAC8431790D8381F4E12F46F7FD09C137440224" = "55711A7F59D7D47D0CBF76673718446EB4CF4A61"
+}
+if (-not $CertSha256 -and -not $NoSign) {
+    # The first pinned certificate this PC has (by its thumbprint path); none: the error below.
+    $CertSha256 = $accepted | Where-Object {
+        $signingThumbprints[$_] -and (Test-Path -LiteralPath "Cert:\CurrentUser\My\$($signingThumbprints[$_])")
+    } | Select-Object -First 1
+}
 if (-not $CertSha256) { $CertSha256 = $pin }
 $CertSha256 = $CertSha256.ToUpperInvariant()
 Write-Host "Background Editor $Version" -ForegroundColor Yellow
-if (-not $NoSign -and $CertSha256 -ne $pin) {
-    Write-Warning ("Signing with certificate $CertSha256, but this build pins $pin. Only the release that " +
-        "hands over to a new signing key does this (README.md, 'Replacing the signing key').")
+if (-not $NoSign -and $CertSha256 -notin $accepted) {
+    Write-Warning ("Signing with certificate $CertSha256, which this build does not pin ($($accepted -join ', ')). " +
+        "Only the release that hands over to a new signing key does this (README.md, 'Replacing the signing key').")
 }
 
 function Invoke-Tool([string]$what) {
@@ -185,18 +205,20 @@ if ($stray) { throw "The self-test left files in the app folder: $($stray.FullNa
 
 $script:signingCert = $null
 function Get-SigningCert {
-    # The certificate in CurrentUser\My whose SHA-256 (of its DER encoding) is $CertSha256.
+    # The certificate whose SHA-256 (of its DER encoding) is $CertSha256, opened by its path
+    # Cert:\CurrentUser\My\<SHA-1 thumbprint>; the store is never listed.
     if ($script:signingCert) { return $script:signingCert }
-    $sha = [System.Security.Cryptography.SHA256]::Create()
-    foreach ($c in @(Get-ChildItem Cert:\CurrentUser\My)) {
-        $hex = -join ($sha.ComputeHash($c.RawData) | ForEach-Object { $_.ToString('X2') })
-        if ($hex -eq $CertSha256) {
-            if (-not $c.HasPrivateKey) { throw "Signing certificate $CertSha256 has no private key here" }
-            $script:signingCert = $c
-            return $c
-        }
-    }
-    throw "Signing certificate with SHA-256 $CertSha256 not found in CurrentUser\My"
+    $thumb = $signingThumbprints[$CertSha256]
+    if (-not $thumb) { throw "No SHA-1 thumbprint known for signing certificate $CertSha256 (add it to `$signingThumbprints)" }
+    $path = "Cert:\CurrentUser\My\$thumb"
+    if (-not (Test-Path -LiteralPath $path)) { throw "Signing certificate $thumb (SHA-256 $CertSha256) not found in CurrentUser\My" }
+    $c = Get-Item -LiteralPath $path
+    $hex = -join ([System.Security.Cryptography.SHA256]::Create().ComputeHash($c.RawData) | ForEach-Object { $_.ToString('X2') })
+    if ($hex -ne $CertSha256) { throw "Certificate $thumb has SHA-256 $hex, not $CertSha256" }
+    if (-not $c.HasPrivateKey) { throw "Signing certificate $CertSha256 has no private key here" }
+    Write-Host "   signing certificate $thumb (SHA-256 $CertSha256)" -ForegroundColor DarkGray
+    $script:signingCert = $c
+    return $c
 }
 
 function Sign-File([string]$path) {
@@ -269,13 +291,13 @@ if (-not $NoSign) { Sign-File $manifest }
 Test-ManifestIsData $manifest
 if (-not $NoSign) {
     Invoke-Tool "Manifest check" verify-manifest --pin $CertSha256 --manifest $manifest --app-dir $appDir @manifestArgs
-    if ($CertSha256 -eq $pin) {
+    if ($CertSha256 -in $accepted) {
         Test-WithApp $manifest
         if (-not $NoInstaller) { Test-WithApp $setup }
     } else {
-        # A hand-over release: this build pins the new certificate but is signed with the old
+        # A hand-over release: this build pins only new certificates but is signed with an old
         # one, which only the previous versions pin (checked just above with that pin).
-        Write-Host "   hand-over release: the packaged app pins $pin, so its own check is left out" -ForegroundColor DarkYellow
+        Write-Host "   hand-over release: the packaged app does not pin $CertSha256, so its own check is left out" -ForegroundColor DarkYellow
     }
 } else {
     Invoke-Tool "Manifest check" verify-manifest --unsigned --manifest $manifest --app-dir $appDir @manifestArgs

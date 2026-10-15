@@ -230,9 +230,12 @@ py -3.14 -m venv .venv
 `build.ps1 -NoSign` skips Authenticode signing (the app does not install such a build as an
 update); `-NoInstaller` skips Inno Setup 6. The version comes from `bgeditor/__init__.py`;
 `-Version x.y.z` overrides it for one build. `-MinUpdateFrom x.y.z` (default `1.1.0`) sets the
-oldest version that may update to the build automatically. The build signs with the
-certificate in `CurrentUser\My` whose SHA-256 is `SIGNER_CERT_SHA256` (`-CertSha256` only for
-the hand-over release described above). The release manifest is made last, from the signed
+oldest version that may update to the build automatically. The build signs with a
+certificate the app pins: `SIGNER_CERT_SHA256` when this PC has it, else the first other one
+in `SIGNER_CERTS_ACCEPTED` that it has (`-CertSha256` picks one; a certificate the app does not
+pin only for the hand-over release described above). It opens the certificate by its path
+`Cert:\CurrentUser\My\<SHA-1 thumbprint>` (the table `$signingThumbprints` in `build.ps1`) and
+checks its SHA-256; it never lists the store. The release manifest is made last, from the signed
 installer and portable zip, signed, and then checked: PowerShell's own parser must see nothing
 but the one here-string assignment, and the packaged app's own check (`BackgroundEditor.exe
 --verify-update`) must accept the manifest and the installer.
