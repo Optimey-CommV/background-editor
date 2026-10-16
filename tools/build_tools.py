@@ -63,6 +63,7 @@ SOURCE_FILES = [
     "BackgroundEditor.spec",
     "build.ps1",
     "installer.iss",
+    "installer.nsi",
     "requirements.txt",
     "README.md",
     "LICENSE",

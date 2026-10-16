@@ -1748,7 +1748,8 @@ def _popen_detached(cmd, cwd: Path, extra_flags: int = 0) -> subprocess.Popen:
 
 def installer_command(path: Path) -> str:
     """The installer's command line: silent with a progress window, no cancel button, closes
-    the app if it still runs, and starts it again afterwards (/RESTARTAPP=1, see installer.iss)."""
+    the app if it still runs, and starts it again afterwards (/RESTARTAPP=1, see installer.iss;
+    installer.nsi understands the same switches)."""
     log = path.with_suffix(".log")
     return f'"{path}" /SILENT /SP- /NOCANCEL /NORESTART /CLOSEAPPLICATIONS /RESTARTAPP=1 /LOG="{log}"'
 

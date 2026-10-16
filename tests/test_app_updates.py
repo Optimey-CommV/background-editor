@@ -1264,6 +1264,29 @@ def test_installer_is_hashed_again_right_before_it_starts(tmp: Path):
             app_updates._popen_detached = saved
     iss = (ROOT / "installer.iss").read_text(encoding="utf-8")
     assert "Check: RestartAfterUpdate" in iss and "{param:RESTARTAPP|0}" in iss and "skipifsilent" in iss
+    # The NSIS build reads the same command line (installer.nsi, .onInit and .onInstSuccess).
+    nsi = (ROOT / "installer.nsi").read_text(encoding="utf-8")
+    for switch in ('"/SILENT"', '"/VERYSILENT"', '"/RESTARTAPP="', '"/LOG="'):
+        assert f"${{GetOptions}} $R0 {switch}" in nsi, switch
+    assert "Function .onInstSuccess" in nsi and "${If} $RestartApp = 1" in nsi
+
+
+def test_installers_add_the_menu_verb_for_every_photo_type():
+    """installer.iss and installer.nsi add "Remove background" to the Explorer menu of exactly
+    the photo types the app opens (INPUT_EXTENSIONS, with HEIC and HEIF, which it opens when
+    pillow-heif is there, as in the build)."""
+    from bgeditor import imageio
+
+    wanted = set(imageio.INPUT_EXTENSIONS) | {".heic", ".heif"}
+    iss = (ROOT / "installer.iss").read_text(encoding="utf-8")
+    dim = re.search(r"#dim public VerbExts\[(\d+)\] \{([^}]*)\}", iss)
+    iss_exts = re.findall(r'"(\.[a-z0-9]+)"', dim.group(2))
+    assert len(iss_exts) == int(dim.group(1)), dim.group(0)
+    nsi = (ROOT / "installer.nsi").read_text(encoding="utf-8")
+    macro = re.search(r"!macro ForEachPhotoType Macro\n(.*?)!macroend", nsi, re.S)
+    nsi_exts = re.findall(r'\$\{Macro\} "(\.[a-z0-9]+)"', macro.group(1))
+    assert set(iss_exts) == wanted == set(nsi_exts), (iss_exts, nsi_exts, sorted(wanted))
+    assert len(nsi_exts) == len(set(nsi_exts)) == len(iss_exts)
 
 
 def test_portable_download_stages_and_checks_every_file(tmp: Path):
