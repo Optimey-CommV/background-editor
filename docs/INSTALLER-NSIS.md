@@ -5,9 +5,10 @@ SPDX-License-Identifier: GPL-3.0-or-later
 -->
 # The NSIS installer (installer.nsi)
 
-Status (2026-10-16): **written, not yet compiled or tested.** `installer.iss` (Inno Setup)
-stays the installer of every release until `installer.nsi` has passed the tests below.
-`build.ps1 -InstallerKind NSIS` builds it; the default is still `Inno`.
+Status (2026-10-16): **compiled with NSIS 3.13 and tested on AI-MGMT** (Windows 11 VM, per
+user), see "Results" at the end. `installer.iss` (Inno Setup) stays the installer of every
+release until the open tests have passed too. `build.ps1 -InstallerKind NSIS` builds it; the
+default is still `Inno`.
 
 ## Why
 
@@ -124,7 +125,7 @@ by itself.
     VC++ runtime: the downloaded vc_redist is still recognised as signed by Microsoft (the
     command loads Windows PowerShell's own Security module; without that, the module path
     inherited from PowerShell 7 broke `Get-AuthenticodeSignature`, also in installer.iss).
-    Repeat with `TEMP` and `TMP` set to a folder whose name holds `'` and a typographic `’`
+    Repeat with `TEMP` and `TMP` set to a folder whose name holds `'` and a typographic apostrophe (U+2019)
     before starting Setup: the download and the signature check still work (the path goes to
     PowerShell through the environment variable `BGEDITOR_VC_FILE`; installer.iss doubles all
     four kinds of single quote). Tested outside the installers on AI-MGMT on 2026-10-16.
@@ -154,3 +155,33 @@ version.
 - The taskbar identity is set with System plug-in COM calls (`IShellLinkW`,
   `IPersistFile`, `IPropertyStore`); Setup logs an HRESULT when that fails.
 - Windows PowerShell does the VC++ download, because NSIS has no HTTPS download built in.
+
+## Results (AI-MGMT, 2026-10-16, NSIS 3.13, test version 1.1.1-nsis1)
+
+| Test | Result |
+|---|---|
+| 1. Compile | passed: makensis 3.13 without errors or warnings; `build.ps1 -InstallerKind NSIS` complete in 770 s |
+| 2. Signatures | passed: Setup and `uninstall.exe` Valid (Optimey Code Signing); the app's `--verify-update` accepts the Setup |
+| 3. First install | passed, silent and interactive: 267 files, uninstall entry with every value, both shortcuts, 10 menu verbs |
+| 4. Taskbar identity | passed: `System.AppUserModel.ID` = `BackgroundEditor.App.1` on both shortcuts (read back through the shell) |
+| 5. Reinstall with other choices | passed: no folder page, the earlier choices preselected; an unticked verb is removed |
+| 6. Upgrade from the Inno build 1.1.0 | passed: Inno entry and `unins000.exe` gone, same folder, choices carried over, models next to the exe kept |
+| 7. Update from inside the app | passed without a release: the exact command line of `installer_command()` with the app running; Setup waited, the app closed, Setup installed and started the app again (28 s), log complete. The full path through a test release is still open |
+| 8. App running | passed: the "still running" question; Retry after closing goes on |
+| 10. Uninstall | passed: silent keeps models and settings; Yes removes them; shortcuts, verbs and entry gone |
+| 12. winget-style | passed: `/S` exit 0; `uninstall.exe /S` judged by the entry disappearing |
+| 13. Links and foreign files | passed: junction targets in the data folder and inside `models` untouched; own files in `source` and `licenses` kept with their folders; a typed existing folder gets the question and its own files stay |
+| 9, 11, 14, 15, OneDrive part of 13 | open: need a PC without the VC++ runtime, Background Remover 1.0, ARM64, a temp path with quotes, OneDrive |
+
+Found while testing and fixed: the menu-verb component text was cut off in the list
+(now "Add "Remove background" to the photo menu"); the uninstaller showed GetSize's
+"Size: ... Files: ... Folders: ..." on the status line; the finish page showed NSIS's own
+picture (now `assets\installer-side.bmp`). These three changes were compiled but not yet
+looked at on screen.
+
+Observed: started with a double-click (ShellExecute) from the network drive K:, Setup took
+138 s (the very first time more than 11 minutes) against 19 s from the local disk or with
+CreateProcess from K:. NSIS reads its data from the exe where it lies, and the antivirus and
+SmartScreen check those reads on a network share; Inno Setup copies itself to `%TEMP%` first.
+The app's updater downloads to a local folder, so updates are not affected. Copy the Setup to
+the local disk before installing it by hand.

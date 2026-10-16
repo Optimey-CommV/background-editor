@@ -123,6 +123,8 @@ Var VCFound      ; what VCRuntimeOK found, for the messages
 
 !define MUI_ICON "assets\app.ico"
 !define MUI_UNICON "assets\app.ico"
+; The side image of the finish page (assets\build_installer_art.py renders it from the logo).
+!define MUI_WELCOMEFINISHPAGE_BITMAP "assets\installer-side.bmp"
 !define MUI_ABORTWARNING
 !define MUI_COMPONENTSPAGE_NODESC
 
@@ -351,7 +353,8 @@ Section "Create a desktop shortcut" SecDesktop
   Call SetShortcutAppId
 SectionEnd
 
-Section 'Add "Remove background" to the right-click menu of photos' SecContext
+; Short enough for the components list (a longer text is cut off there).
+Section 'Add "Remove background" to the photo menu' SecContext
   !insertmacro ForEachPhotoType WriteVerb
 SectionEnd
 
@@ -1023,6 +1026,8 @@ Section "Uninstall"
   ; not install them, so they would otherwise keep the app folder.
   ${If} ${FileExists} "${DataDir}\*.*"
   ${OrIf} ${FileExists} "$INSTDIR\models\*.*"
+    ; GetSize writes its result to the status line; keep that out of sight.
+    SetDetailsPrint none
     StrCpy $1 0
     ${If} ${FileExists} "${DataDir}\models\*.*"
       ${un.GetSize} "${DataDir}\models" "/S=0M" $1 $2 $3
@@ -1032,6 +1037,7 @@ Section "Uninstall"
       ${un.GetSize} "$INSTDIR\models" "/S=0M" $4 $2 $3
     ${EndIf}
     IntOp $1 $1 + $4
+    SetDetailsPrint lastused
     MessageBox MB_YESNO|MB_ICONQUESTION|MB_DEFBUTTON2 "Also delete the AI models ($1 MB) and settings?" /SD IDNO IDNO keepdata
       ; Never through a link: a models folder moved with mklink /J keeps its target.
       !insertmacro UnDeleteTreeNoLinks "${DataDir}"
