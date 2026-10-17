@@ -375,9 +375,11 @@ def need_signed_exe() -> bytes:
         raise Skip("Authenticode is Windows-only")
     if not SIGNED_EXE.is_file():
         raise Skip(f"{SIGNED_EXE} is missing; run build.ps1 first")
-    check = app_updates.check_signature(SIGNED_EXE, pinned=SIGNER_CERT_SHA256)
+    # Either pinned certificate will do (signer_pins(): SIGNER_CERT_SHA256 and SIGNER_CERTS_ACCEPTED), so a
+    # build signed on the PC with the newer certificate is tested too.
+    check = app_updates.check_signature(SIGNED_EXE)
     if not check.ok:
-        raise Skip(f"{SIGNED_EXE} is not signed with the pinned certificate ({check.reason})")
+        raise Skip(f"{SIGNED_EXE} is not signed with a pinned certificate ({check.reason})")
     return SIGNED_EXE.read_bytes()
 
 
@@ -1691,7 +1693,7 @@ def test_sha256_pin(tmp: Path):
         assert inspect.signature(fn).parameters["pinned"].default is None, fn.__name__
     need_signed_exe()
     r = app_updates.check_signature(SIGNED_EXE)
-    assert r.ok and r.cert_sha256 == SIGNER_CERT_SHA256 and "Optimey" in r.subject, r
+    assert r.ok and r.cert_sha256 in app_updates.signer_pins() and "Optimey" in r.subject, r
     assert not app_updates.check_signature(SIGNED_EXE, pinned=OLD_SHA1_THUMBPRINT).ok
     # build.ps1 signs with a pinned certificate, read from bgeditor/__init__.py, and opens it by
     # its thumbprint path; every pin has a thumbprint there, and the store is never listed.
@@ -1718,7 +1720,7 @@ def test_sha256_pin(tmp: Path):
 def test_signature_of_the_real_build(tmp: Path):
     exe = need_signed_exe()
     ok = app_updates.check_signature(SIGNED_EXE)
-    assert ok.ok and ok.code == 0 and ok.cert_sha256 == SIGNER_CERT_SHA256 and "Optimey" in ok.subject, ok
+    assert ok.ok and ok.code == 0 and ok.cert_sha256 in app_updates.signer_pins() and "Optimey" in ok.subject, ok
     unsigned = tmp / "unsigned.exe"
     unsigned.write_bytes(strip_signature(exe))
     r = app_updates.check_signature(unsigned)
@@ -1877,7 +1879,7 @@ def test_verify_update_command_line(tmp: Path):
                            creationflags=subprocess.CREATE_NO_WINDOW)
         text = report.read_text(encoding="utf-8")
         assert r.returncode == code, (path, r.returncode, text, r.stderr[-500:])
-        assert text.startswith(words) and (SIGNER_CERT_SHA256 in text) == signer, text
+        assert text.startswith(words) and any(pin in text for pin in app_updates.signer_pins()) == signer, text
 
 
 # ------------------------------------------------------------------ UI
