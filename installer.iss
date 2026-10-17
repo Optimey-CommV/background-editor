@@ -264,8 +264,15 @@ var
   Quoted: String;
 begin
   Quoted := FileName;
+  { PowerShell also ends a single-quoted string at the typographic quotes, so double those
+    as well (a user folder such as O'Brien can hold one). }
   StringChangeEx(Quoted, '''', '''''', True);
+  StringChangeEx(Quoted, #$2018, #$2018#$2018, True);
+  StringChangeEx(Quoted, #$2019, #$2019#$2019, True);
+  StringChangeEx(Quoted, #$201A, #$201A#$201A, True);
+  StringChangeEx(Quoted, #$201B, #$201B#$201B, True);
   Command := '-NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "' +
+    'Import-Module ($PSHOME + ''\Modules\Microsoft.PowerShell.Security''); ' +
     '$s = Get-AuthenticodeSignature -LiteralPath ''' + Quoted + '''; ' +
     'if ($s.Status -eq ''Valid'' -and $s.SignerCertificate.Subject -match ''O=Microsoft Corporation'') { exit 0 } else { exit 1 }"';
   Result := Exec(ExpandConstant('{sys}\WindowsPowerShell\v1.0\powershell.exe'), Command, '',
