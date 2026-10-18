@@ -5,9 +5,9 @@
     Usage (PowerShell in this folder):
         .\build.ps1                     # full build: everything below, signed
         .\build.ps1 -NoInstaller        # skip the installer (the zips are still made)
-        .\build.ps1 -InstallerKind NSIS # the installer from installer.nsi (NSIS) instead of
-                                        # installer.iss (Inno Setup, still the default until
-                                        # the NSIS one has passed docs\INSTALLER-NSIS.md)
+        .\build.ps1 -InstallerKind Inno # the old installer from installer.iss (Inno Setup),
+                                        # kept for one more release; the default is
+                                        # installer.nsi (NSIS, docs\INSTALLER-NSIS.md)
         .\build.ps1 -NoSign             # skip Authenticode signing (the app will not
                                         # install such a build as an update)
         .\build.ps1 -Version 1.1.0-rc1  # build under another version than the source's
@@ -34,8 +34,8 @@
     installs an update only when the release carries the signed manifest. Give the two source
     zips along whenever you give the program to someone else (GNU GPL v3, section 6).
 
-    The version comes from __version__ in bgeditor\__init__.py, which the spec and
-    installer.iss read as well. -Version overrides it for one build: the exe's version
+    The version comes from __version__ in bgeditor\__init__.py, which the spec and the
+    installer scripts read as well. -Version overrides it for one build: the exe's version
     resource, About, the download User-Agent and the installer all get the override.
     The signing certificate is one the app pins (SIGNER_CERT_SHA256 and SIGNER_CERTS_ACCEPTED
     in bgeditor\__init__.py, by the SHA-256 of its DER encoding): SIGNER_CERT_SHA256 when this
@@ -43,9 +43,9 @@
     Cert:\CurrentUser\My\<SHA-1 thumbprint> ($signingThumbprints below) and its SHA-256 is
     checked; the store is never listed.
 
-    Needs: the project venv (.venv) with the packages in requirements.txt, Inno Setup 6
-    (ISCC.exe) or NSIS 3.11 or newer (makensis.exe; or set MAKENSIS to its path) for the
-    installer, the code signing certificate in CurrentUser\My for
+    Needs: the project venv (.venv) with the packages in requirements.txt, NSIS 3.11 or
+    newer (makensis.exe; or set MAKENSIS to its path) for the installer (Inno Setup 6,
+    ISCC.exe, only with -InstallerKind Inno), the code signing certificate in CurrentUser\My for
     signing, and internet on the first build: the third-party source archives listed in
     tools\third_party_sources.json are downloaded once into -SourceCache, checked against
     their pinned SHA-256, and reused from there.
@@ -67,7 +67,7 @@
 param(
     [string]$Version = "",
     [switch]$NoInstaller,
-    [ValidateSet("Inno", "NSIS")][string]$InstallerKind = "Inno",
+    [ValidateSet("Inno", "NSIS")][string]$InstallerKind = "NSIS",
     [switch]$NoSign,
     [string]$MinUpdateFrom = "1.1.0",
     [string]$CertSha256 = "",

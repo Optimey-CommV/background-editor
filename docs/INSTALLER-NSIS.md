@@ -5,10 +5,12 @@ SPDX-License-Identifier: GPL-3.0-or-later
 -->
 # The NSIS installer (installer.nsi)
 
-Status (2026-10-16): **compiled with NSIS 3.13 and tested on AI-MGMT** (Windows 11 VM, per
-user), see "Results" at the end. `installer.iss` (Inno Setup) stays the installer of every
-release until the open tests have passed too. `build.ps1 -InstallerKind NSIS` builds it; the
-default is still `Inno`.
+Status (2026-10-18): **the default installer.** Compiled with NSIS 3.13 and tested on AI-MGMT
+(Windows 11 VM, per user) on 2026-10-16, see "Results" at the end; the owner looked at the
+pages and chose on 2026-10-18 to make it the default of `build.ps1` before the open tests (a PC
+without the VC++ runtime, Background Remover 1.0, ARM64, OneDrive, a quote in TEMP, the full
+in-app update through a test release). `build.ps1 -InstallerKind Inno` still builds
+`installer.iss` for one more release.
 
 ## Why
 
@@ -130,9 +132,9 @@ by itself.
     PowerShell through the environment variable `BGEDITOR_VC_FILE`; installer.iss doubles all
     four kinds of single quote). Tested outside the installers on AI-MGMT on 2026-10-16.
 
-When all pass: make NSIS the default of `build.ps1`, update README.md ("Publishing a
-release", "Needs"), and keep `installer.iss` one more release for anyone who builds an older
-version.
+Done on 2026-10-18, before the open tests by the owner's choice: NSIS is the default of
+`build.ps1`, README.md says so, and `installer.iss` stays one more release for anyone who
+builds an older version. Run the open tests when such a machine is at hand.
 
 ## Known points to check while testing
 

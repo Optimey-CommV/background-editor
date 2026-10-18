@@ -28,7 +28,10 @@ into `%LOCALAPPDATA%\Programs\Background Editor`, adds a Start menu entry and, o
 **Remove background** to the right-click menu of JPEG, PNG, WebP, BMP, TIFF and HEIC photos
 (on Windows 11 under *Show more options*). Selecting several photos and choosing it once
 opens them all in one window. An installed *Background Remover* is removed first; its
-downloaded models and settings are kept and moved over on the first start.
+downloaded models and settings are kept and moved over on the first start. So is a Background
+Editor 1.1.x installed with the earlier Setup: Setup installs into the same folder and keeps
+your choices, models and settings. Run Setup from a local disk: started from a network share it
+can take minutes, because the virus scanner checks every read.
 
 The app needs the **Microsoft Visual C++ Redistributable (x64), 14.51 or newer**. Most PCs
 have it; if not, Setup offers to download Microsoft's installer
@@ -228,7 +231,9 @@ py -3.14 -m venv .venv
 ```
 
 `build.ps1 -NoSign` skips Authenticode signing (the app does not install such a build as an
-update); `-NoInstaller` skips Inno Setup 6. The version comes from `bgeditor/__init__.py`;
+update); `-NoInstaller` skips the installer. The installer is built with NSIS 3.11 or newer
+from `installer.nsi` (`docs/INSTALLER-NSIS.md`); `-InstallerKind Inno` still builds the earlier
+Inno Setup 6 installer from `installer.iss` for one more release. The version comes from `bgeditor/__init__.py`;
 `-Version x.y.z` overrides it for one build. `-MinUpdateFrom x.y.z` (default `1.1.0`) sets the
 oldest version that may update to the build automatically. The build signs with a
 certificate the app pins: `SIGNER_CERT_SHA256` when this PC has it, else the first other one
