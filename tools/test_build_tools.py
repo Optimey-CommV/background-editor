@@ -99,7 +99,7 @@ def test_forbidden_files() -> None:
 def test_source_tree_selection() -> None:
     files = dict(bt.source_files())
     for must in ("app.py", "LICENSE", "LICENSES.txt", "BackgroundEditor.spec", "build.ps1",
-                 "installer.iss", "requirements.txt", "README.md", "bgeditor/__init__.py",
+                 "installer.iss", "installer.nsi", "requirements.txt", "README.md", "bgeditor/__init__.py",
                  "bgeditor/paths.py", "tools/build_tools.py", "tools/third_party_sources.json",
                  "tools/licenses/LGPL-3.0.txt"):
         assert must in files, must

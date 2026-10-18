@@ -4,7 +4,10 @@
 
     Usage (PowerShell in this folder):
         .\build.ps1                     # full build: everything below, signed
-        .\build.ps1 -NoInstaller        # skip Inno Setup (the zips are still made)
+        .\build.ps1 -NoInstaller        # skip the installer (the zips are still made)
+        .\build.ps1 -InstallerKind Inno # the old installer from installer.iss (Inno Setup),
+                                        # kept for one more release; the default is
+                                        # installer.nsi (NSIS, docs\INSTALLER-NSIS.md)
         .\build.ps1 -NoSign             # skip Authenticode signing (the app will not
                                         # install such a build as an update)
         .\build.ps1 -Version 1.1.0-rc1  # build under another version than the source's
@@ -31,8 +34,8 @@
     installs an update only when the release carries the signed manifest. Give the two source
     zips along whenever you give the program to someone else (GNU GPL v3, section 6).
 
-    The version comes from __version__ in bgeditor\__init__.py, which the spec and
-    installer.iss read as well. -Version overrides it for one build: the exe's version
+    The version comes from __version__ in bgeditor\__init__.py, which the spec and the
+    installer scripts read as well. -Version overrides it for one build: the exe's version
     resource, About, the download User-Agent and the installer all get the override.
     The signing certificate is one the app pins (SIGNER_CERT_SHA256 and SIGNER_CERTS_ACCEPTED
     in bgeditor\__init__.py, by the SHA-256 of its DER encoding): SIGNER_CERT_SHA256 when this
@@ -40,8 +43,9 @@
     Cert:\CurrentUser\My\<SHA-1 thumbprint> ($signingThumbprints below) and its SHA-256 is
     checked; the store is never listed.
 
-    Needs: the project venv (.venv) with the packages in requirements.txt, Inno Setup 6
-    (ISCC.exe) for the installer, the code signing certificate in CurrentUser\My for
+    Needs: the project venv (.venv) with the packages in requirements.txt, NSIS 3.11 or
+    newer (makensis.exe; or set MAKENSIS to its path) for the installer (Inno Setup 6,
+    ISCC.exe, only with -InstallerKind Inno), the code signing certificate in CurrentUser\My for
     signing, and internet on the first build: the third-party source archives listed in
     tools\third_party_sources.json are downloaded once into -SourceCache, checked against
     their pinned SHA-256, and reused from there.
@@ -63,6 +67,7 @@
 param(
     [string]$Version = "",
     [switch]$NoInstaller,
+    [ValidateSet("Inno", "NSIS")][string]$InstallerKind = "NSIS",
     [switch]$NoSign,
     [string]$MinUpdateFrom = "1.1.0",
     [string]$CertSha256 = "",
@@ -238,16 +243,61 @@ Write-Host "=== 7/9 Portable zip ===" -ForegroundColor Cyan
 Invoke-Tool "Portable zip" portable --app-dir $appDir --version $Version --vc-min $vcMin --out $portableZip
 
 if (-not $NoInstaller) {
-    Write-Host "=== 8/9 Installer ===" -ForegroundColor Cyan
-    $iscc = @(
-        (Join-Path $env:LOCALAPPDATA "Programs\Inno Setup 6\ISCC.exe"),
-        "C:\Program Files (x86)\Inno Setup 6\ISCC.exe",
-        "C:\Program Files\Inno Setup 6\ISCC.exe"
-    ) | Where-Object { Test-Path $_ } | Select-Object -First 1
-    if (-not $iscc) { throw "Inno Setup 6 (ISCC.exe) not found" }
-    & $iscc "/DAppVersion=$Version" "/DVCRedistMajor=$vcMajor" "/DVCRedistMinor=$vcMinor" "/Qp" installer.iss
-    if ($LASTEXITCODE -ne 0) { throw "Inno Setup failed ($LASTEXITCODE)" }
-    if (-not (Test-Path $setup)) { throw "Inno Setup did not produce $setup" }
+    Write-Host "=== 8/9 Installer ($InstallerKind) ===" -ForegroundColor Cyan
+    if ($InstallerKind -eq "NSIS") {
+        # The uninstaller removes exactly the files Setup installs (like Inno Setup's uninstall
+        # log): one Delete per file, then one RMDir (never /r) per folder, deepest first.
+        # portable.conf is never installed (File /x in installer.nsi).
+        $appRoot = (Get-Item -LiteralPath $appDir).FullName.TrimEnd('\')
+        $items = @(Get-ChildItem -LiteralPath $appRoot -Recurse -Force | Where-Object { $_.PSIsContainer -or $_.Name -ne "portable.conf" })
+        if (@($items | Where-Object { $_.Attributes -band [IO.FileAttributes]::ReparsePoint }).Count) { throw "The app folder holds a link; the installer would copy its target" }
+        $rel = { param($item) $item.FullName.Substring($appRoot.Length + 1).Replace('$', '$$') }
+        $uninstallLines = @($items | Where-Object { -not $_.PSIsContainer } | ForEach-Object { "  Delete `"`$INSTDIR\$(& $rel $_)`"" })
+        $uninstallLines += @($items | Where-Object { $_.PSIsContainer } |
+            Sort-Object @{ Expression = { ($_.FullName.Split('\')).Count }; Descending = $true }, FullName |
+            ForEach-Object { "  RMDir `"`$INSTDIR\$(& $rel $_)`"" })
+        $filesList = Join-Path $work "installer-files.nsh"
+        [System.IO.File]::WriteAllText($filesList, (($uninstallLines -join "`r`n") + "`r`n"), (New-Object System.Text.UTF8Encoding $true))
+        Write-Host ("   uninstaller list: {0} files, {1} folders" -f @($items | Where-Object { -not $_.PSIsContainer }).Count, @($items | Where-Object { $_.PSIsContainer }).Count) -ForegroundColor DarkGray
+        $makensis = @(
+            $env:MAKENSIS,
+            (Join-Path ${env:ProgramFiles(x86)} "NSIS\makensis.exe"),
+            (Join-Path $env:ProgramFiles "NSIS\makensis.exe"),
+            (Join-Path $env:LOCALAPPDATA "Programs\NSIS\makensis.exe")
+        ) | Where-Object { $_ -and (Test-Path -LiteralPath $_) } | Select-Object -First 1
+        if (-not $makensis) { throw "NSIS (makensis.exe) not found; set MAKENSIS to its path" }
+        Write-Host ("   makensis {0} ({1})" -f ((& $makensis /VERSION) -join ""), $makensis) -ForegroundColor DarkGray
+        # The version resource takes four numbers: 1.2.0-rc1 gives 1.2.0.0.
+        $numbers = @(([regex]::Match($Version, '^\d+(\.\d+){0,3}').Value -split '\.') + @("0", "0", "0"))[0..3]
+        $defines = @(
+            "!define AppVersion `"$Version`"",
+            "!define AppVersionNumeric `"$($numbers -join '.')`"",
+            "!define VCRedistMajor $vcMajor",
+            "!define VCRedistMinor $vcMinor"
+        )
+        if (-not $NoSign) {
+            # makensis signs the uninstaller before it packs it (!uninstfinalize); it runs the
+            # command through cmd, so the command must not start with a quote.
+            $null = Get-SigningCert
+            $signer = Join-Path $PSScriptRoot "tools\sign-file.ps1"
+            $defines += ("!define SignCommand 'powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File `"{0}`" -Path `"%1`" -Thumbprint {1} -CertSha256 {2} -TimestampServer `"{3}`"'" -f
+                $signer, $signingThumbprints[$CertSha256], $CertSha256, $TimestampServer)
+        }
+        $definesFile = Join-Path $work "installer-defines.nsh"
+        [System.IO.File]::WriteAllText($definesFile, (($defines -join "`r`n") + "`r`n"), (New-Object System.Text.UTF8Encoding $false))
+        & $makensis /V2 "/DBuildDefines=$definesFile" "/DInstalledFiles=$filesList" installer.nsi
+        if ($LASTEXITCODE -ne 0) { throw "NSIS failed ($LASTEXITCODE)" }
+    } else {
+        $iscc = @(
+            (Join-Path $env:LOCALAPPDATA "Programs\Inno Setup 6\ISCC.exe"),
+            "C:\Program Files (x86)\Inno Setup 6\ISCC.exe",
+            "C:\Program Files\Inno Setup 6\ISCC.exe"
+        ) | Where-Object { Test-Path $_ } | Select-Object -First 1
+        if (-not $iscc) { throw "Inno Setup 6 (ISCC.exe) not found" }
+        & $iscc "/DAppVersion=$Version" "/DVCRedistMajor=$vcMajor" "/DVCRedistMinor=$vcMinor" "/Qp" installer.iss
+        if ($LASTEXITCODE -ne 0) { throw "Inno Setup failed ($LASTEXITCODE)" }
+    }
+    if (-not (Test-Path $setup)) { throw "The installer build did not produce $setup" }
     if (-not $NoSign) { Sign-File $setup }
 } else {
     Write-Host "=== 8/9 Installer skipped ===" -ForegroundColor DarkGray
