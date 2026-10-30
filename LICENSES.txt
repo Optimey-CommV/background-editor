@@ -154,7 +154,7 @@ SciPy 1.18.1
   linked statically, the GCC runtime library (GNU GPL v3 with the GCC
   Runtime Library Exception, appendix I); see licenses\scipy.
 
-Pillow 12.3.0
+Pillow 13.0.0
   MIT-CMU License (appendix H), Copyright (c) 1997-2011 Secret Labs AB,
   (c) 1995-2011 Fredrik Lundh and contributors, (c) 2010 Jeffrey A. Clark and
   contributors
