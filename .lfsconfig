@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2026 Optimey CommV
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# Git LFS objects of this repository live on the Optimey LFS server, not on GitHub.
+# Anyone can download them; uploads only work from the Optimey network.
+# Without git-lfs you get small pointer files instead of the real files.
+[lfs]
+	url = https://lfs-github.optimey.be/Optimey-CommV/background-editor.git/info/lfs
+	locksverify = false
