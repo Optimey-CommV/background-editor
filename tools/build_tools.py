@@ -71,6 +71,7 @@ SOURCE_FILES = [
     "LICENSES.txt.license",
     ".gitignore",
     ".gitattributes",
+    ".lfsconfig",
     ".gitleaks.toml",
     ".pre-commit-config.yaml",
 ]
